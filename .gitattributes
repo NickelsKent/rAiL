@@ -1,0 +1,18 @@
+# Store and check out text files with LF on every platform.
+* text=auto eol=lf
+
+# rAiL canonical text, human form, source maps and package files are
+# LF-only by spec (§2.5); mark them explicitly so detection never guesses.
+*.rlc text eol=lf
+*.rlh text eol=lf
+*.rlmap text eol=lf
+rail.pkg text eol=lf
+rail.lock text eol=lf
+rail.review text eol=lf
+
+# rAiL canonical binary.
+*.rlb binary
+
+# Windows scripts need CRLF to run correctly under cmd.exe.
+*.cmd text eol=crlf
+*.bat text eol=crlf
