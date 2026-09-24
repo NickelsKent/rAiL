@@ -66,3 +66,5 @@
 
 <!-- Project-specific corrections from human feedback. -->
 <!-- Format: NEVER/ALWAYS [behavior] (learned [date]) -->
+- Added three follow-ups (Q11–Q13) after answer analysis: full 1.0 (Q3) conflicted with a no-release plan (Q10), 'me + contributors' (Q6) conflicted with 'me alone' (Q7), and full-1.0 scope with a single builder needed an explicit sequencing choice. (learned 2026-09-24) <!-- cid:260924-rail-toolchain-build:intent-capture:feedfaf6aa17943e3f6e286f941a2fb3429453fe88089939634ab1c8cee56c54 -->
+- Replaced the stage's default questions on market research, mockups and mob staffing (those stages were not in this plan) with questions on accepted risks, model/machine access and translator placement (learned 2026-09-24) <!-- cid:260924-rail-toolchain-build:approval-handoff:8505851a0583918bdfc50a079f17bc4ddbb34a419363d5a431f73f7ff92ad85a -->
