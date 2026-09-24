@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "documents": [
+    {
+      "id": "01a0d434-5009-77de-bde3-ca5af460eed1",
+      "source": {
+        "kind": "managed",
+        "path": "documents/rail-language-spec.md"
+      },
+      "sha256": "fa578a6258e0c473f882fdf7af94ec11403aad772df402b34dea74fcb27a130e",
+      "bytes": 85744,
+      "indexed_at": "2026-09-24T16:16:33.276Z",
+      "extraction": {
+        "state": "extracted",
+        "extractor": {
+          "name": "builtin-text",
+          "version": "1"
+        },
+        "chars": 85534,
+        "truncated": false,
+        "source_revision": "fa578a6258e0c473f882fdf7af94ec11403aad772df402b34dea74fcb27a130e"
+      },
+      "summary": {
+        "state": "absent"
+      },
+      "content": "documentkb/01a0d434-5009-77de-bde3-ca5af460eed1/content.md",
+      "content_sha256": "fa578a6258e0c473f882fdf7af94ec11403aad772df402b34dea74fcb27a130e"
+    }
+  ]
+}
