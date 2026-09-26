@@ -56,11 +56,29 @@
 <!-- Format: NEVER [behavior] (affirmed [date]) -->
 <!-- Example: NEVER throw exceptions across service layer boundaries (affirmed 2026-05-17) -->
 
+- NEVER lower an acceptance-suite pass criterion, its recorded CI volume, or a coverage floor to make a build pass. (affirmed 2026-09-25)
+
+- NEVER commit signing keys, model API keys or other secrets to the repository. (affirmed 2026-09-25)
+
+- NEVER put timestamps, absolute paths, hostnames or random seeds into compiler output. (affirmed 2026-09-25)
+
+- NEVER move or delete a release tag once it has been pushed. (affirmed 2026-09-25)
+
+- NEVER publish to a public package registry as part of this work. (affirmed 2026-09-25)
+
 ## Mandated
 
 <!-- Populated by practices-discovery affirmation gate. -->
 <!-- Format: ALWAYS [behavior] (affirmed [date]) -->
 <!-- Example: ALWAYS use Result<T,E> for fallible operations in service layer (affirmed 2026-05-17) -->
+
+- ALWAYS update the spec in the same change when a decision changes what the spec says. (affirmed 2026-09-25)
+
+- ALWAYS pass CI on both macOS and Linux before any merge to `main`. (affirmed 2026-09-25)
+
+- ALWAYS include a test that reproduces the defect with every defect fix. (affirmed 2026-09-25)
+
+- ALWAYS state a reason for every new Rust dependency and get the owner's approval before adding it. (affirmed 2026-09-25)
 
 ## Corrections
 

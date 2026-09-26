@@ -1,9 +1,6 @@
-# Team-Level Rules
+# Team Practices — rAiL Toolchain
 
-> This team's affirmed practices and corrections. Loaded after `org.md` as
-> strict-additive guidance; contradictions with broader policy are rejected.
-> Populated by the practices-discovery affirmation gate. Edit at the gate,
-> not directly.
+How we build the rAiL toolchain, as affirmed by the owner in the practices-discovery interview (Q1–Q15) and its confirmed summary.
 
 ## Way of Working
 
@@ -106,10 +103,6 @@ Additional notes (these do not replace the two fields above):
 - Coverage floors, acceptance-suite pass criteria and recorded CI volumes are
   never lowered to make a build pass.
 
-## Guard Policy
-
-<!-- Affirmed by the team. Mode: strict, relaxed, or off. Strict here holds for every intent and cannot be changed from chat. A section under the retired Change Control heading, written by an earlier release, is still read. -->
-
 ## Deployment
 
 rAiL has no hosted service, so there are no staging or production servers.
@@ -177,14 +170,3 @@ the suggestion if those tools do not already cover it.
 - rAiL source files (`.rlc`, `.rlh`) use the canonical form, which the parser
   enforces. Once `rail fmt` exists, it formats all rAiL files in the repository.
 - LF line endings everywhere, as `.gitattributes` already enforces.
-## Forbidden
-
-<!-- Team-specific forbidden patterns -->
-
-## Mandated
-
-<!-- Team-specific mandates -->
-
-## Corrections
-
-<!-- Self-learning loop appends here. -->
