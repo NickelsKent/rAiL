@@ -1,0 +1,20 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "walking-skeleton",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR7.1", "NFR7.2", "NFR7.3", "NFR8", "NFR9", "NFR10"],
+  "coverage": [
+    { "id": "NFR1", "status": "OK", "target": "NFR1.1, NFR1.2, NFR1.3" },
+    { "id": "NFR2", "status": "N/A", "target": "Agent reliability is measured by U17 measurement-tools on the full toolchain; the skeleton makes no agent-reliability claim" },
+    { "id": "NFR3", "status": "OK", "target": "NFR3.1, NFR3.2, NFR3.3, NFR3.4, NFR3.5" },
+    { "id": "NFR4", "status": "OK", "target": "NFR4.1, NFR4.2, NFR4.3, NFR4.4, NFR4.5, NFR4.6" },
+    { "id": "NFR5", "status": "OK", "target": "NFR5.1, NFR5.2, NFR5.3, NFR5.4, NFR5.5, NFR5.6" },
+    { "id": "NFR6", "status": "OK", "target": "NFR6.1, NFR6.2" },
+    { "id": "NFR7", "status": "OK", "target": "NFR7.4, NFR7.5, NFR7.6" },
+    { "id": "NFR7.1", "status": "OK", "target": "NFR7.6" },
+    { "id": "NFR7.2", "status": "OK", "target": "NFR7.4, NFR7.5" },
+    { "id": "NFR7.3", "status": "OK", "target": "NFR7.6" },
+    { "id": "NFR8", "status": "N/A", "target": "TLS assurance belongs to U9 crypto-and-net; the skeleton has no network access" },
+    { "id": "NFR9", "status": "OK", "target": "NFR9.1, NFR9.2, NFR9.3, NFR9.4, NFR9.5, NFR9.6, NFR9.7, NFR9.8, NFR9.9, NFR9.10, NFR9.11, NFR9.12, NFR9.13, NFR9.14" },
+    { "id": "NFR10", "status": "OK", "target": "NFR10.1, NFR10.2" }
+  ]
+}
