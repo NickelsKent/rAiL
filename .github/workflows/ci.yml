@@ -1,0 +1,106 @@
+# Pull-request CI for the rail workspace (NFR6.2, NFR9.1, NFR9.3, NFR10.1).
+# Both platform jobs must be green before a merge to main.
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: never
+  UNIT_PACKAGES: -p rail -p rail-json -p rail-diag -p rail-syntax -p rail-check -p rail-lower -p rail-codegen -p rail-build -p rail-tools -p rail-rap
+
+jobs:
+  test:
+    name: test (${{ matrix.name }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macos
+            os: macos-latest
+          - name: linux
+            os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain (rust-toolchain.toml)
+        run: rustup toolchain install && rustc --version
+      - uses: taiki-e/install-action@4cef1412cce204788f482e778a0b9187f9626a29 # v2.87.21
+        with:
+          tool: cargo-nextest@0.9.146,cargo-llvm-cov@0.9.1
+      - name: Build
+        run: cargo build --locked --workspace --all-targets
+      - name: Tests
+        run: cargo nextest run --locked $UNIT_PACKAGES -p rail-testkit
+      - name: Formatting
+        run: |
+          cargo fmt --all --check
+          rustfmt --edition 2024 --check crates/rail-runtime/src/lib.rs
+      - name: Clippy (warnings are errors)
+        run: |
+          cargo clippy --locked --workspace --all-targets -- -D warnings
+          CARGO_TARGET_DIR=target/rail-runtime cargo clippy --locked --manifest-path crates/rail-runtime/Cargo.toml -- -D warnings
+      - name: forbid(unsafe_code) in every crate but rail-codegen and rail-runtime
+        run: scripts/check-forbid-unsafe.sh
+      - name: Build a sample program
+        run: |
+          sample="$RUNNER_TEMP/sample"
+          mkdir -p "$sample"
+          cp -R fixtures/. "$sample/"
+          (cd "$sample" && "$GITHUB_WORKSPACE/target/debug/rail" build skeleton/answer.rlc)
+          echo "SAMPLE=$sample/.rail/build/dev/skeleton/answer" >> "$GITHUB_ENV"
+      - name: Runtime symbol allow-list (nm -u)
+        run: scripts/check-runtime-symbols.sh "$SAMPLE"
+      - name: Linked-libraries allow-list (otool -L / ldd)
+        run: scripts/check-linked-libs.sh "$SAMPLE"
+      - name: libfuzzer-sys is not in the rail dependency tree
+        run: |
+          if cargo tree --locked -p rail -e all --target all | grep -q libfuzzer; then
+            echo "libfuzzer-sys reached the rail dependency tree"
+            exit 1
+          fi
+      - name: Walking-skeleton verification (WF6)
+        timeout-minutes: 10
+        run: scripts/verify-skeleton.sh
+      - name: Coverage (at least 80% of lines, measured on Linux)
+        if: matrix.name == 'linux'
+        run: cargo llvm-cov nextest --locked $UNIT_PACKAGES --fail-under-lines 80
+
+  supply-chain:
+    name: supply chain (cargo-deny)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: taiki-e/install-action@4cef1412cce204788f482e778a0b9187f9626a29 # v2.87.21
+        with:
+          tool: cargo-deny@0.20.2
+      - name: Advisories, bans, licences and sources
+        run: cargo deny --locked check
+
+  secrets:
+    name: secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      pull-requests: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_ENABLE_COMMENTS: false

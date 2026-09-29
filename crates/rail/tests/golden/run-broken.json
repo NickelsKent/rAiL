@@ -1,0 +1,1 @@
+{"error":{"code":"build.blocked","message":"skeleton.broken has blocking diagnostics","data":{"module":"skeleton.broken","diagnostics":[{"rule":"TY001","level":"E","loc":{"module":"skeleton.broken","def":"#sk0a1b","path":"4","span":[82,90]},"message":"expected i64, found bool","confidence":1.0}],"blocking":true}}}

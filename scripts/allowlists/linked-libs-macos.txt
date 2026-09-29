@@ -1,0 +1,2 @@
+# Libraries a built program may link (macOS).
+/usr/lib/libSystem.B.dylib

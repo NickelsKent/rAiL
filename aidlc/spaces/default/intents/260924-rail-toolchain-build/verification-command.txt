@@ -1,0 +1,1 @@
+PATH="$HOME/.cargo/bin:$PATH" bash scripts/verify-skeleton.sh

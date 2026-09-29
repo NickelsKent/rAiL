@@ -14,9 +14,9 @@ This plan builds the walking skeleton: one Cargo workspace producing one `rail` 
 
 These run after this plan is approved and before any code is written. They follow your answers of 2026-09-27.
 
-- [ ] **P1. Planning records to `main`.** Commit the current planning and design records on `rail-toolchain-ideation` and open a pull request into `main` on `NickelsKent/rAiL`. You review and merge it. Code generation waits for the merge.
-- [ ] **P2. Bolt branch.** After the merge, update `main` and create `bolt/walking-skeleton` from it. All skeleton work goes on that branch and reaches `main` through one squash-merged pull request with green CI, the AI review and your approval.
-- [ ] **P3. Rust.** Install Rust with the official installer from `https://rustup.rs` (it installs into `~/.rustup` and `~/.cargo`). Then install:
+- [x] **P1. Planning records to `main`.** Commit the current planning and design records on `rail-toolchain-ideation` and open a pull request into `main` on `NickelsKent/rAiL`. You review and merge it. Code generation waits for the merge.
+- [x] **P2. Bolt branch.** After the merge, update `main` and create `bolt/walking-skeleton` from it. All skeleton work goes on that branch and reaches `main` through one squash-merged pull request with green CI, the AI review and your approval.
+- [x] **P3. Rust.** Install Rust with the official installer from `https://rustup.rs` (it installs into `~/.rustup` and `~/.cargo`). Then install:
   - the newest stable toolchain, with the `rustfmt`, `clippy` and `llvm-tools-preview` components;
   - the newest nightly (fuzzing only);
   - the tools `cargo-nextest`, `cargo-llvm-cov`, `cargo-deny` and `cargo-fuzz`.
@@ -111,25 +111,25 @@ Each Red step runs the unit-scoped test command from `unit-test-instructions.md`
 
 ### Step 1 — Project structure and production configuration skeleton
 
-- [ ] Create the Cargo workspace at the repository root:
+- [x] Create the Cargo workspace at the repository root:
   - `Cargo.toml` lists the workspace members `crates/rail`, `crates/rail-json`, `crates/rail-diag`, `crates/rail-syntax`, `crates/rail-check`, `crates/rail-lower`, `crates/rail-codegen`, `crates/rail-build`, `crates/rail-tools`, `crates/rail-rap` and `crates/rail-testkit`, with `resolver = "3"` and edition 2024. `crates/rail-runtime` is not a member: `rail-build` compiles it (Step 12).
   - `license = "MIT OR Apache-2.0"`.
   - `[profile.*]` sets `panic = "unwind"` for the compiler.
-- [ ] Add these root files:
+- [x] Add these root files:
   - `rust-toolchain.toml`: the stable version recorded in P3, with the `rustfmt`, `clippy` and `llvm-tools-preview` components.
   - `.gitignore`: add `/target/` and `/.rail/`.
   - `LICENSE-MIT` and `LICENSE-APACHE`.
-- [ ] Add Cranelift, pinned to one exact version (the newest release on the day), as `rail-codegen` dependencies: `cranelift-codegen`, `cranelift-frontend`, `cranelift-module` and `cranelift-object` (NFR7.4). No other third-party crate.
-- [ ] Put `#![forbid(unsafe_code)]` at the top of every crate root except `rail-codegen` (and `rail-runtime`), plus `#![deny(clippy::print_stdout, clippy::print_stderr)]` in every library crate (NFR4.1, NFR9.12).
-- [ ] Add `clippy.toml` with `disallowed-types` for `std::collections::HashMap` and `std::collections::HashSet` (NFR3.3).
+- [x] Add Cranelift, pinned to one exact version (the newest release on the day), as `rail-codegen` dependencies: `cranelift-codegen`, `cranelift-frontend`, `cranelift-module` and `cranelift-object` (NFR7.4). No other third-party crate.
+- [x] Put `#![forbid(unsafe_code)]` at the top of every crate root except `rail-codegen` (and `rail-runtime`), plus `#![deny(clippy::print_stdout, clippy::print_stderr)]` in every library crate (NFR4.1, NFR9.12).
+- [x] Add `clippy.toml` with `disallowed-types` for `std::collections::HashMap` and `std::collections::HashSet` (NFR3.3).
 - Traces: FR27, NFR4.1, NFR7.4, NFR3.3, NFR9.12.
 
 ### Step 2 — Acceptance harness first: the end-to-end tests (WF6), failing
 
-- [ ] Add the two fixtures:
+- [x] Add the two fixtures:
   - `fixtures/skeleton/answer.rlc`: the happy path from `functional-spec.md` (canonical text, fixed IDs, every function exported).
   - `fixtures/skeleton/broken.rlc`: the same module with `answer`'s body `(== x 7)`.
-- [ ] Write `crates/rail/tests/e2e.rs`, one test per WF6 step:
+- [x] Write `crates/rail/tests/e2e.rs`, one test per WF6 step:
   - `check` answer: no diagnostics.
   - `run` answer: stdout `42\n`, exit 0.
   - A protocol session on answer: `initialize`, `tree.get`, `check.run`, `build.run`, `run.run` return `{exit_code: 0, stdout: "42\n", stderr: ""}`.
@@ -137,86 +137,86 @@ Each Red step runs the unit-scoped test command from `unit-test-instructions.md`
   - The server answers correctly after a malformed message.
   - Two builds are byte-identical.
   - Outputs match the shared golden files.
-- [ ] Traces: FR27, BR6.1, NFR6.1. These tests stay failing until Step 16. They are the unit's acceptance proof.
+- [x] Traces: FR27, BR6.1, NFR6.1. These tests stay failing until Step 16. They are the unit's acceptance proof.
 
 ### Step 3 — Bootstrap the test runner and record the unit-scoped command
 
-- [ ] Add `.config/nextest.toml` with `slow-timeout = { period = "30s", terminate-after = 2 }` (NFR1.2).
-- [ ] Create `crates/rail-testkit`:
+- [x] Add `.config/nextest.toml` with `slow-timeout = { period = "30s", terminate-after = 2 }` (NFR1.2).
+- [x] Create `crates/rail-testkit`:
   - golden-file compare with the `RAIL_BLESS=1` rewrite switch (NFR9.4);
   - a process runner with a 60-second deadline;
   - a framed RAP client;
   - helper binaries `never-ends`, `floods-output` and `aborts`.
-- [ ] Run the unit-scoped command from `unit-test-instructions.md`. It must compile and run, with the Step 2 tests failing. Record its output.
+- [x] Run the unit-scoped command from `unit-test-instructions.md`. It must compile and run, with the Step 2 tests failing. Record its output.
 - Traces: NFR1.2, NFR9.2, NFR9.4.
 
 ### Step 4 — Data model, Red: `rail-json` and `rail-diag` tests
 
-- [ ] Vendor the JSONTestSuite `test_parsing` cases from `https://github.com/nst/JSONTestSuite` into `tests/data/JSONTestSuite/`, with its MIT licence file and the upstream commit hash recorded in `tests/data/JSONTestSuite/SOURCE.md` (NFR4.3).
-- [ ] `rail-json` tests:
+- [x] Vendor the JSONTestSuite `test_parsing` cases from `https://github.com/nst/JSONTestSuite` into `tests/data/JSONTestSuite/`, with its MIT licence file and the upstream commit hash recorded in `tests/data/JSONTestSuite/SOURCE.md` (NFR4.3).
+- [x] `rail-json` tests:
   - round trip;
   - every `y_` case accepted and every `n_` case rejected, with no panic;
   - duplicate keys, trailing data and bad UTF-8 rejected;
   - depth 64 accepted and 65 rejected;
   - a seeded random-input test (seed logged), with no panic;
   - a writer test for declared field order and escaping.
-- [ ] `rail-diag` tests:
+- [x] `rail-diag` tests:
   - diagnostic JSON matches the C3 shape;
   - sort order (module, def, path, span, rule);
   - the registry holds exactly TY001, FX001 and SKL001;
   - registering SKL001 twice fails.
-- [ ] Run the unit-scoped command and record the failing output.
+- [x] Run the unit-scoped command and record the failing output.
 - Traces: NFR4.3, NFR4.4, NFR3.1, BR4.1, BR4.3, BR4.4.
 
 ### Step 5 — Data model, Green
 
-- [ ] Implement `rail-json`:
+- [x] Implement `rail-json`:
   - a strict RFC 8259 reader using an explicit work stack, with a depth counter (64);
   - checked indexing and no panics;
   - a writer that keeps declared field order.
-- [ ] Implement `rail-diag`:
+- [x] Implement `rail-diag`:
   - the `Diagnostic` type (rule, level `E`, loc {module, def, path, span}, message, confidence);
   - the fixed rule registry and the deterministic sort.
-- [ ] Unit-scoped command: the Step 4 tests pass.
+- [x] Unit-scoped command: the Step 4 tests pass.
 - Traces: NFR4.3, NFR4.4, NFR3.1, BR4.1–BR4.4.
 
 ### Step 6 — Data model, Refactor
 
-- [ ] Tidy both crates with the tests green; `clippy -D warnings` clean.
+- [x] Tidy both crates with the tests green; `clippy -D warnings` clean.
 
 ### Step 7 — Repository / data access, Red: workspace access tests in `rail-tools`
 
-- [ ] Tests:
+- [x] Tests:
   - module path resolution inside the root;
   - rejection with `module.not_found` of `..`, absolute paths, backslashes, NUL, and a symlink pointing outside the root;
   - `module.unreadable` for an unreadable file;
   - `SKL001` at byte 16 MiB for an oversized file.
-- [ ] Run and record the failures.
+- [x] Run and record the failures.
 - Traces: NFR5.3, NFR4.4, WF1 step 1.
 
 ### Step 8 — Repository / data access, Green
 
-- [ ] Implement path confinement (canonicalised root, symlink resolution, prefix check) and the bounded read (16 MiB + 1). Tests pass.
+- [x] Implement path confinement (canonicalised root, symlink resolution, prefix check) and the bounded read (16 MiB + 1). Tests pass.
 
 ### Step 9 — Repository / data access, Refactor
 
-- [ ] Tidy with the tests green.
+- [x] Tidy with the tests green.
 
 ### Step 10 — Business logic, Red: front end, back end, runtime and operations
 
-- [ ] `rail-syntax` tests:
+- [x] `rail-syntax` tests:
   - accepts both fixtures, and printing each reproduces it byte for byte (BR1.3);
   - SKL001 for an unsupported form (BR1.1), each layout violation (BR1.2), a malformed input with a precise location (BR1.4), a bad or duplicate ID (BR1.5), a reserved `skel` module (and `skeleton.answer` accepted) (BR1.6), nesting 257 (NFR4.4) and an integer suffix (BR2.4).
-- [ ] `rail-check` tests:
+- [x] `rail-check` tests:
   - TY001 for a mismatch, differing arm types, a non-`bool` scrutinee, a bad operator argument, `main`'s shape, and misplaced `Caps`/`Result` (BR2.3, BR2.5–BR2.7);
   - FX001 for a missing `log` (BR3.2);
   - SKL001 for an unsupported type, an effect other than `log`, shadowing, an unused binding, an unknown name, a missing signature and a missing export (BR1.7, BR2.1, BR2.2, BR3.3);
   - `skel.print_i64` typing (BR3.1).
-- [ ] `rail-lower` and `rail-codegen` tests:
+- [x] `rail-lower` and `rail-codegen` tests:
   - IR for literals, calls, `let` and the Boolean match;
   - overflow and division checks emitted (BR5.4);
   - an object file produced, with the same bytes twice (NFR3.2).
-- [ ] `rail-build` tests:
+- [x] `rail-build` tests:
   - build and run `skeleton.answer`: prints `42`, exit 0;
   - an Err main: exit 1;
   - overflow and division by zero: exit 70 with one trap line (BR5.3, BR5.4, NFR4.2);
@@ -225,60 +225,60 @@ Each Red step runs the unit-scoped test command from `unit-test-instructions.md`
   - a forced link failure leaves no artifact (NFR9.8);
   - two builds in two directories are byte-identical, and no absolute path appears in the binary (BR5.5, NFR3.2);
   - output lands under `.rail/build/dev/`.
-- [ ] `rail-tools` tests:
+- [x] `rail-tools` tests:
   - the four operations return the entity shapes;
   - the panic boundary gives `internal.error` (NFR9.7);
   - `run.failed` for the time limit, the output cap and a signal (NFR5.5, NFR9.9);
   - a cleared environment for the program (NFR5.1).
-- [ ] Run and record the failures.
+- [x] Run and record the failures.
 
 ### Step 11 — Business logic, Green: front end
 
-- [ ] Implement `rail-syntax`:
+- [x] Implement `rail-syntax`:
   - tokenizer and parser for the skeleton form set, with explicit nesting counters (256), layout validation and located `SKL001` diagnostics;
   - a printer for byte-exact round trips;
   - IDs and anchor paths.
-- [ ] Implement `rail-check`:
+- [x] Implement `rail-check`:
   - name resolution (locals, module functions, operators, `Ok`/`Err`, `skel.print_i64`);
   - monomorphic typing;
   - the `log` effect check;
   - the `main` shape check.
-- [ ] Front-end tests pass.
+- [x] Front-end tests pass.
 
 ### Step 12 — Business logic, Green: back end and runtime
 
-- [ ] `crates/rail-runtime`: a `#![no_std]` Rust static library built with `panic = "abort"`. It declares `write` and `exit` itself (no `libc` crate), and every `unsafe` block carries a `// SAFETY:` comment. It provides:
+- [x] `crates/rail-runtime`: a `#![no_std]` Rust static library built with `panic = "abort"`. It declares `write` and `exit` itself (no `libc` crate), and every `unsafe` block carries a `// SAFETY:` comment. It provides:
   - the C `main` entry, which calls the generated `rail_entry` and exits with 0 or 1; on Err it writes `error: main returned Err` to stderr (E7);
   - `rail_rt_print_i64` (decimal, one `\n`, written out before exit) (BR5.7);
   - `rail_rt_trap(kind)`, which writes one trap line to stderr and exits with 70.
-- [ ] `rail-build`'s build script compiles `rail-runtime` with the same `rustc` (the `RUSTC` environment variable) for the host target into `OUT_DIR`, and embeds the archive bytes in `rail`. At link time, `rail` writes the archive into `.rail/build/dev/runtime/`, named by its content hash.
-- [ ] `rail-lower`: typed definitions become SSA IR, with checked arithmetic that branches to the trap entry.
-- [ ] `rail-codegen`: Cranelift for the host target, writing an object file through `cranelift-object`. No debug information.
-- [ ] `rail-build` (dev mode):
+- [x] `rail-build`'s build script compiles `rail-runtime` with the same `rustc` (the `RUSTC` environment variable) for the host target into `OUT_DIR`, and embeds the archive bytes in `rail`. At link time, `rail` writes the archive into `.rail/build/dev/runtime/`, named by its content hash.
+- [x] `rail-lower`: typed definitions become SSA IR, with checked arithmetic that branches to the trap entry.
+- [x] `rail-codegen`: Cranelift for the host target, writing an object file through `cranelift-object`. No debug information.
+- [x] `rail-build` (dev mode):
   1. check first;
   2. `.o.partial` then rename;
   3. `cc` started with an argument list, working directory set to the module's build directory, relative arguments;
   4. `.partial` executable then atomic rename;
   5. cleanup on failure;
   6. `cc` not found or failing mapped to `build.failed` (NFR5.4, NFR9.8, NFR9.10).
-- [ ] The run operation starts the program with no arguments, empty stdin and a cleared environment. It reads both pipes on threads, with a 16 MiB cap and a 10-second limit, and reports a signal as `run.failed` (NFR5.1, NFR5.5, NFR5.6, NFR9.9).
-- [ ] Back-end, runtime and `rail-build` tests pass.
+- [x] The run operation starts the program with no arguments, empty stdin and a cleared environment. It reads both pipes on threads, with a 16 MiB cap and a 10-second limit, and reports a signal as `run.failed` (NFR5.1, NFR5.5, NFR5.6, NFR9.9).
+- [x] Back-end, runtime and `rail-build` tests pass.
 
 ### Step 13 — Business logic, Green: operations
 
-- [ ] `rail-tools`:
+- [x] `rail-tools`:
   - the four operations (parse, check, build, run) over workspace access;
   - the typed ToolError codes (including `internal.error`);
   - a `catch_unwind` panic boundary with a quiet panic hook (BR6.1, NFR9.6, NFR9.7).
-- [ ] Operation tests pass.
+- [x] Operation tests pass.
 
 ### Step 14 — Business logic, Refactor
 
-- [ ] Tidy all business-logic crates with the tests green; `clippy -D warnings` clean.
+- [x] Tidy all business-logic crates with the tests green; `clippy -D warnings` clean.
 
 ### Step 15 — API / endpoint, Red: protocol and command line
 
-- [ ] `rail-rap` tests:
+- [x] `rail-rap` tests:
   - framing (good; missing or duplicate `Content-Length`; a 1 KiB header; a 16 MiB + 1 body discarded in chunks);
   - `-32700`, `-32600`, `-32601`, `-32602` (missing or mistyped `module`), `rap.unsupported_param` (`depth`, `_deadline_ms`, an unknown key), `rap.not_initialized`, and a repeated `initialize` giving `-32600`;
   - notifications get no response;
@@ -286,24 +286,24 @@ Each Red step runs the unit-scoped test command from `unit-test-instructions.md`
   - responses come back in request order;
   - stdout carries frames only;
   - a 1,000-request soak with the RSS check (BR6.3–BR6.5, NFR3.4, NFR9.5).
-- [ ] `rail` command-line tests:
+- [x] `rail` command-line tests:
   - `parse`, `check`, `build` and `run`, with exit codes 0, 1, 2 and 3, and the program's own code for `run` (BR6.2);
   - `--json` equals the protocol result (BR6.1);
   - `RAIL_LOG` off by default, and records with no timestamp or path (NFR9.13, NFR3.5).
-- [ ] Run and record the failures.
+- [x] Run and record the failures.
 
 ### Step 16 — API / endpoint, Green
 
-- [ ] Implement `rail-rap`:
+- [x] Implement `rail-rap`:
   - the single-threaded request loop;
   - the layered validation from `security-design.md` (header, size, JSON, request, method, session, params shape, params support);
   - the session state machine.
-- [ ] Implement the `rail` command line (`parse`, `check`, `build`, `run`, `rap`, `--json`) and `RAIL_LOG` logging to stderr.
-- [ ] Protocol and command-line tests pass, and the Step 2 end-to-end tests now pass.
+- [x] Implement the `rail` command line (`parse`, `check`, `build`, `run`, `rap`, `--json`) and `RAIL_LOG` logging to stderr.
+- [x] Protocol and command-line tests pass, and the Step 2 end-to-end tests now pass.
 
 ### Step 17 — API / endpoint, Refactor
 
-- [ ] Tidy with every test green.
+- [x] Tidy with every test green.
 
 ### Step 18 — Frontend behavior
 
@@ -311,7 +311,7 @@ Each Red step runs the unit-scoped test command from `unit-test-instructions.md`
 
 ### Step 19 — Environment and build configuration (CI, supply chain, fuzzing, verification)
 
-- [ ] `.github/workflows/ci.yml` (pull requests):
+- [x] `.github/workflows/ci.yml` (pull requests):
   - jobs `test (macos)` on `macos-latest` and `test (linux)` on `ubuntu-latest`: build, nextest with `--locked`, `fmt --check`, `clippy -D warnings`;
   - Linux coverage with `--fail-under-lines 80`;
   - `cargo deny check`;
@@ -322,19 +322,19 @@ Each Red step runs the unit-scoped test command from `unit-test-instructions.md`
   - the `libfuzzer-sys`-not-in-`rail` dependency-tree check;
   - job `timeout-minutes: 30`.
   Actions are pinned by commit SHA, with `permissions: contents: read` (NFR10.1, NFR6.2, NFR7.5, NFR7.6, NFR5.2, NFR4.1, NFR9.1, NFR9.3).
-- [ ] `.github/workflows/nightly.yml`: the `json_parse` fuzz target for 30 minutes on the pinned nightly, uploading failing inputs, `timeout-minutes: 60` (NFR4.5).
-- [ ] `.github/workflows/weekly-advisories.yml`: `cargo deny check advisories` on a weekly schedule.
-- [ ] `deny.toml`: crates.io only; an allow-list of the locked Cranelift family and its transitive crates; licences compatible with MIT OR Apache-2.0, each checked against published metadata; advisories denied.
-- [ ] `fuzz/` (not a workspace member): `fuzz/Cargo.toml` with `libfuzzer-sys` (approved, fuzz-only) and `fuzz/fuzz_targets/json_parse.rs` (parse, write, re-parse, equal). Pin the nightly in `fuzz/rust-toolchain.toml`.
-- [ ] `scripts/verify-skeleton.sh`: a candidate for the recorded verification command. It runs the WF6 steps against a freshly built `rail` and prints `PASS n …` / `FAIL n …`, with the command and captured output on failure. It exits non-zero on any failure (NFR9.14). The command itself is chosen with you at the skeleton checkpoint.
-- [ ] Record the approved dependencies with their reasons in `docs/dependencies.md`: the Cranelift family and `libfuzzer-sys`.
+- [x] `.github/workflows/nightly.yml`: the `json_parse` fuzz target for 30 minutes on the pinned nightly, uploading failing inputs, `timeout-minutes: 60` (NFR4.5).
+- [x] `.github/workflows/weekly-advisories.yml`: `cargo deny check advisories` on a weekly schedule.
+- [x] `deny.toml`: crates.io only; an allow-list of the locked Cranelift family and its transitive crates; licences compatible with MIT OR Apache-2.0, each checked against published metadata; advisories denied.
+- [x] `fuzz/` (not a workspace member): `fuzz/Cargo.toml` with `libfuzzer-sys` (approved, fuzz-only) and `fuzz/fuzz_targets/json_parse.rs` (parse, write, re-parse, equal). Pin the nightly in `fuzz/rust-toolchain.toml`.
+- [x] `scripts/verify-skeleton.sh`: a candidate for the recorded verification command. It runs the WF6 steps against a freshly built `rail` and prints `PASS n …` / `FAIL n …`, with the command and captured output on failure. It exits non-zero on any failure (NFR9.14). The command itself is chosen with you at the skeleton checkpoint.
+- [x] Record the approved dependencies with their reasons in `docs/dependencies.md`: the Cranelift family and `libfuzzer-sys`.
 
 ### Step 20 — Documentation and traceability
 
-- [ ] `README.md`: a "Building the toolchain" section covering the prerequisites (rustup, `cc`), the test command, the bless switch and the verification script.
-- [ ] Short crate-level docs (`//!`) for each crate naming its building block and owning unit.
-- [ ] Tick every step in this plan as it is done.
-- [ ] Write `code-summary.md`, `source-manifest.json` (every created or modified path) and `traceability.json` (every BRx.y and NFRx.y mapped to an existing implementation or test file) in this unit's code-generation record directory.
+- [x] `README.md`: a "Building the toolchain" section covering the prerequisites (rustup, `cc`), the test command, the bless switch and the verification script.
+- [x] Short crate-level docs (`//!`) for each crate naming its building block and owning unit.
+- [x] Tick every step in this plan as it is done.
+- [x] Write `code-summary.md`, `source-manifest.json` (every created or modified path) and `traceability.json` (every BRx.y and NFRx.y mapped to an existing implementation or test file) in this unit's code-generation record directory.
 
 ## Traceability overview
 

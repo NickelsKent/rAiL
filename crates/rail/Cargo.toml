@@ -1,0 +1,19 @@
+[package]
+name = "rail"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[[bin]]
+name = "rail"
+path = "src/main.rs"
+
+[dependencies]
+rail-json = { workspace = true }
+rail-tools = { workspace = true }
+rail-rap = { workspace = true }
+
+[dev-dependencies]
+rail-testkit = { workspace = true }

@@ -1,0 +1,18 @@
+[package]
+name = "rail-tools"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+rail-json = { workspace = true }
+rail-diag = { workspace = true }
+rail-syntax = { workspace = true }
+rail-check = { workspace = true }
+rail-build = { workspace = true }
+
+[dev-dependencies]
+rail-testkit = { workspace = true }
+rail-codegen = { workspace = true }

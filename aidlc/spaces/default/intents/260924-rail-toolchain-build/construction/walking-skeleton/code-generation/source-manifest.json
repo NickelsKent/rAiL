@@ -1,0 +1,58 @@
+{
+  "stage": "code-generation",
+  "unit": "walking-skeleton",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".gitignore"
+    },
+    {
+      "path": "README.md"
+    },
+    {
+      "path": "Cargo.toml"
+    },
+    {
+      "path": "Cargo.lock"
+    },
+    {
+      "path": "rust-toolchain.toml"
+    },
+    {
+      "path": "clippy.toml"
+    },
+    {
+      "path": "deny.toml"
+    },
+    {
+      "path": "LICENSE-MIT"
+    },
+    {
+      "path": "LICENSE-APACHE"
+    },
+    {
+      "path": ".config/"
+    },
+    {
+      "path": ".github/workflows/"
+    },
+    {
+      "path": "crates/"
+    },
+    {
+      "path": "docs/"
+    },
+    {
+      "path": "fixtures/"
+    },
+    {
+      "path": "fuzz/"
+    },
+    {
+      "path": "scripts/"
+    },
+    {
+      "path": "tests/data/JSONTestSuite/"
+    }
+  ]
+}

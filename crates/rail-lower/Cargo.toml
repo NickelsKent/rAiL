@@ -1,0 +1,11 @@
+[package]
+name = "rail-lower"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+publish.workspace = true
+
+[dependencies]
+rail-syntax = { workspace = true }
+rail-check = { workspace = true }
