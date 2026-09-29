@@ -1,0 +1,10 @@
+# Undefined symbols allowed in a program linked with rail-runtime (Linux,
+# glibc). exit and write come from the runtime; the rest are references from
+# the C start-up files that cc links into every program.
+__cxa_finalize
+__gmon_start__
+__libc_start_main
+_ITM_deregisterTMCloneTable
+_ITM_registerTMCloneTable
+exit
+write

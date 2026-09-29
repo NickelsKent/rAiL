@@ -1,0 +1,4 @@
+# Hang guard (NFR1.2): a test that runs past 30 s is reported as slow and is
+# killed after two periods, so no test runs longer than 60 s.
+[profile.default]
+slow-timeout = { period = "30s", terminate-after = 2 }

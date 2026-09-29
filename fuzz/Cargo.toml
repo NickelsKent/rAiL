@@ -1,0 +1,26 @@
+# Coverage-guided fuzzing of the in-house JSON parser (NFR4.5, NFR7.5).
+# Not a member of the main workspace, so libfuzzer-sys never reaches the
+# shipped `rail` binary. Built with the pinned nightly in rust-toolchain.toml.
+[package]
+name = "rail-fuzz"
+version = "0.0.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "=0.4.13"
+rail-json = { path = "../crates/rail-json" }
+
+[[bin]]
+name = "json_parse"
+path = "fuzz_targets/json_parse.rs"
+test = false
+doc = false
+bench = false
+
+[workspace]
+members = ["."]

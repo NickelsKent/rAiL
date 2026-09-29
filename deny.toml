@@ -1,0 +1,53 @@
+# cargo-deny policy for the rail workspace (NFR7.4, NFR10.1). Runs on every
+# pull request; the advisories check also runs weekly.
+
+[graph]
+targets = ["aarch64-apple-darwin", "x86_64-unknown-linux-gnu"]
+all-features = false
+
+[advisories]
+# Known vulnerabilities, unmaintained and unsound crates, and yanked
+# versions all fail the check.
+yanked = "deny"
+ignore = []
+
+[licenses]
+# Licences compatible with rail's MIT OR Apache-2.0 licence, each checked
+# against the crates' published metadata on 2026-09-27:
+#   MIT, Apache-2.0 - most crates; Apache-2.0 WITH LLVM-exception - the
+#   Cranelift family, regalloc2, target-lexicon, wasmtime-internal-core;
+#   Zlib - foldhash; memchr is "Unlicense OR MIT" and is used under MIT.
+allow = ["MIT", "Apache-2.0", "Apache-2.0 WITH LLVM-exception", "Zlib"]
+confidence-threshold = 0.93
+
+[licenses.private]
+# The workspace's own unpublished crates (publish = false).
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+allow-wildcard-paths = true
+# Only these crates may appear. Any other crate needs a stated reason and the
+# owner's approval, and is added here in the same pull request.
+allow = [
+    # The workspace.
+    "rail", "rail-json", "rail-diag", "rail-syntax", "rail-check", "rail-lower",
+    "rail-codegen", "rail-build", "rail-tools", "rail-rap", "rail-testkit",
+    # The pre-approved Cranelift family (docs/dependencies.md) ...
+    "cranelift-codegen", "cranelift-frontend", "cranelift-module", "cranelift-object",
+    # ... and its transitive crates, as locked on 2026-09-27.
+    "allocator-api2", "anyhow", "arbitrary", "bumpalo", "cfg-if",
+    "cranelift-assembler-x64", "cranelift-assembler-x64-meta", "cranelift-bforest",
+    "cranelift-bitset", "cranelift-codegen-meta", "cranelift-codegen-shared",
+    "cranelift-control", "cranelift-entity", "cranelift-isle", "cranelift-srcgen",
+    "crc32fast", "equivalent", "fnv", "foldhash", "gimli", "hashbrown", "heck",
+    "indexmap", "libm", "log", "memchr", "object", "regalloc2", "rustc-hash",
+    "smallvec", "target-lexicon", "wasmtime-internal-core",
+]
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

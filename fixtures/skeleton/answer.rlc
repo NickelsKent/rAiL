@@ -1,0 +1,4 @@
+(mod skeleton.answer)
+(pub answer main)
+(fn #sk0a1b answer (x) (: (-> (i64) i64)) (* x 7))
+(fn #sk0m4n main (_) (: (-> (Caps) (Result unit unit) log)) (let (n (answer 6)) (_ (skel.print_i64 n)) (? (== n 42) (true (Ok ())) (false (Err ())))))

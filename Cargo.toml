@@ -1,0 +1,50 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/rail",
+    "crates/rail-json",
+    "crates/rail-diag",
+    "crates/rail-syntax",
+    "crates/rail-check",
+    "crates/rail-lower",
+    "crates/rail-codegen",
+    "crates/rail-build",
+    "crates/rail-tools",
+    "crates/rail-rap",
+    "crates/rail-testkit",
+]
+# rail-runtime is compiled by rail-build's build script (a no_std static
+# library with panic = "abort"); fuzz/ is a separate nightly-only crate.
+exclude = ["crates/rail-runtime", "fuzz"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/NickelsKent/rAiL"
+publish = false
+
+[workspace.dependencies]
+rail-json = { path = "crates/rail-json" }
+rail-diag = { path = "crates/rail-diag" }
+rail-syntax = { path = "crates/rail-syntax" }
+rail-check = { path = "crates/rail-check" }
+rail-lower = { path = "crates/rail-lower" }
+rail-codegen = { path = "crates/rail-codegen" }
+rail-build = { path = "crates/rail-build" }
+rail-tools = { path = "crates/rail-tools" }
+rail-rap = { path = "crates/rail-rap" }
+rail-testkit = { path = "crates/rail-testkit" }
+# The pre-approved Cranelift family, pinned to one exact version (NFR7.4).
+cranelift-codegen = { version = "=0.136.1", default-features = false, features = ["std", "host-arch"] }
+cranelift-frontend = { version = "=0.136.1", default-features = false, features = ["std"] }
+cranelift-module = { version = "=0.136.1", default-features = false, features = ["std"] }
+cranelift-object = { version = "=0.136.1", default-features = false }
+
+# The compiler unwinds so the ToolServices panic boundary can catch a panic
+# (NFR9.7). Only rail-runtime is built with panic = "abort".
+[profile.dev]
+panic = "unwind"
+
+[profile.release]
+panic = "unwind"

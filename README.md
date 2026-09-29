@@ -125,6 +125,57 @@ hash, and apply atomically:
  (del #h1w7ep))
 ```
 
+## Building the toolchain
+
+The repository currently holds the **walking skeleton**: a thin `rail` that
+parses, checks, serves over RAP, builds with Cranelift and runs a one-function
+module on macOS (AArch64) and Linux (x86-64). It accepts only a small subset of
+the language and reports anything else as `SKL001`.
+
+**Prerequisites**
+
+- Rust through [rustup](https://rustup.rs). The pinned stable toolchain in
+  `rust-toolchain.toml` is installed on first use (`rustup toolchain install`
+  installs it explicitly). Fuzzing uses the pinned nightly in
+  `fuzz/rust-toolchain.toml`.
+- A C compiler driver `cc` to link programs: the Xcode Command Line Tools on
+  macOS, the system `cc` on Linux.
+- The test tools: `cargo install --locked cargo-nextest cargo-llvm-cov
+  cargo-deny cargo-fuzz`.
+
+**Build and try it**
+
+```bash
+cargo build --locked -p rail
+cd fixtures
+../target/debug/rail check skeleton/answer.rlc   # skeleton.answer: no diagnostics
+../target/debug/rail run skeleton/answer.rlc     # prints 42
+../target/debug/rail check --json skeleton/broken.rlc
+```
+
+Builds go to `.rail/build/dev/` under the workspace (the current directory).
+`rail rap` serves the protocol on standard input and output, and `RAIL_LOG=debug`
+turns on log lines on standard error.
+
+**Tests**
+
+```bash
+cargo nextest run --locked -p rail -p rail-json -p rail-diag -p rail-syntax -p rail-check -p rail-lower -p rail-codegen -p rail-build -p rail-tools -p rail-rap -p rail-testkit
+```
+
+Expected-output (golden) files change only through the bless switch: run the
+tests with `RAIL_BLESS=1` and review the diff in the pull request. Coverage is
+`cargo llvm-cov nextest` with an 80% line floor, measured on Linux in CI.
+
+**End-to-end verification**
+
+`scripts/verify-skeleton.sh` builds `rail` and runs the seven walking-skeleton
+checks, printing `PASS n …` or `FAIL n …` for each and exiting non-zero on any
+failure.
+
+Dependencies and their reasons are listed in
+[`docs/dependencies.md`](docs/dependencies.md).
+
 ## File extensions
 
 | Extension | Content |

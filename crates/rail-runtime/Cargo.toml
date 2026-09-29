@@ -1,0 +1,23 @@
+# rail-runtime is not a workspace member: rail-build's build script compiles
+# src/lib.rs directly with rustc as a no_std static library. This manifest
+# exists so the crate can be linted on its own:
+#   cargo clippy --manifest-path crates/rail-runtime/Cargo.toml -- -D warnings
+[package]
+name = "rail-runtime"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+publish = false
+
+[lib]
+crate-type = ["staticlib"]
+test = false
+doctest = false
+
+[profile.dev]
+panic = "abort"
+
+[profile.release]
+panic = "abort"
+
+[workspace]

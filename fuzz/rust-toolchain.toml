@@ -1,0 +1,4 @@
+# Nightly is used only for fuzzing (team practice). This is the nightly
+# installed on 2026-09-27: rustc 1.101.0-nightly (75a75c3e0 2026-09-26).
+[toolchain]
+channel = "nightly-2026-09-27"

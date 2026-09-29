@@ -1,0 +1,3 @@
+# Undefined symbols allowed in a program linked with rail-runtime (macOS).
+_exit
+_write
