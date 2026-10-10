@@ -1,0 +1,85 @@
+{
+  "stage": "code-generation",
+  "unit": "acceptance-harness",
+  "version": 1,
+  "writes": [
+    {
+      "path": ".github/workflows/ci.yml"
+    },
+    {
+      "path": ".github/workflows/nightly.yml"
+    },
+    {
+      "path": "Cargo.lock"
+    },
+    {
+      "path": "deny.toml"
+    },
+    {
+      "path": "docs/dependencies.md"
+    },
+    {
+      "path": "docs/release-check.md"
+    },
+    {
+      "path": "scripts/verify-skeleton.sh"
+    },
+    {
+      "path": "spec/rail-language-spec.md"
+    },
+    {
+      "path": "tests/acceptance/suites.toml"
+    },
+    {
+      "path": "crates/rail-testkit/Cargo.toml"
+    },
+    {
+      "path": "crates/rail-testkit/src/lib.rs"
+    },
+    {
+      "path": "crates/rail-testkit/src/harness/"
+    },
+    {
+      "path": "crates/rail-testkit/src/suites/"
+    },
+    {
+      "path": "crates/rail-testkit/src/bin/rail-accept.rs"
+    },
+    {
+      "path": "crates/rail-testkit/src/bin/fake-rail.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/common/"
+    },
+    {
+      "path": "crates/rail-testkit/tests/data/harness/"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_settings.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_report.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_deps.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_ratchet.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_process.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_run.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_compare.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_cli.rs"
+    },
+    {
+      "path": "crates/rail-testkit/tests/harness_s0.rs"
+    }
+  ]
+}

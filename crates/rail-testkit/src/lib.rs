@@ -1,7 +1,17 @@
-//! Test tooling: golden files, a process runner and a framed RAP client.
+//! Test tooling: golden files, a process runner, a framed RAP client, and
+//! the acceptance harness.
 //!
-//! Never shipped. Owning unit: U1 walking-skeleton (extended by U2
-//! acceptance-harness).
+//! Never shipped. Owning units: U1 walking-skeleton (golden files, process
+//! runner, RAP client) and U2 acceptance-harness.
+//!
+//! The acceptance harness ([`harness`], [`suites`] and the `rail-accept`
+//! program) runs the spec's acceptance suites T1-T14 and the walking-skeleton
+//! smoke suite S0 at the pull-request, nightly and release levels (FR57). It
+//! reads the recorded settings in `tests/acceptance/suites.toml`, drives
+//! `rail` only through its command line and RAP (BR5.1), checks the volume
+//! ratchet, compares platforms, and writes deterministic results files.
+//! Suites live in `suites/<id>.rs` and register in [`suites::Registry`]
+//! (contract C9). This crate never depends on a compiler crate.
 
 #![forbid(unsafe_code)]
 #![deny(clippy::print_stdout, clippy::print_stderr)]
@@ -15,6 +25,9 @@ use std::sync::atomic::{AtomicU64, Ordering};
 use std::sync::mpsc::{self, Receiver, RecvTimeoutError};
 use std::thread;
 use std::time::{Duration, Instant, SystemTime, UNIX_EPOCH};
+
+pub mod harness;
+pub mod suites;
 
 /// Deadline for any process a test starts (performance design).
 pub const PROCESS_DEADLINE: Duration = Duration::from_secs(60);
@@ -195,14 +208,18 @@ pub fn run_process(cmd: &mut Command, stdin: &[u8]) -> ProcessOutput {
     }
 }
 
-/// Runs `cmd` with `stdin` as its input, killing it after `deadline`.
+/// Runs `cmd` with `stdin` as its input, killing it after `deadline`. The
+/// process runs in its own process group, and the whole group is killed at
+/// the deadline, so grandchildren cannot outlive it (BR5.2).
 pub fn run_process_with_deadline(
     cmd: &mut Command,
     stdin: &[u8],
     deadline: Duration,
 ) -> Result<ProcessOutput, DeadlineExceeded> {
+    use std::os::unix::process::CommandExt;
     let command = describe(cmd);
     let mut child = cmd
+        .process_group(0)
         .stdin(Stdio::piped())
         .stdout(Stdio::piped())
         .stderr(Stdio::piped())
@@ -221,7 +238,9 @@ pub fn run_process_with_deadline(
             break Some(status);
         }
         if start.elapsed() >= deadline {
-            let _ = child.kill();
+            if harness::process::kill_process_group(child.id()).is_err() {
+                let _ = child.kill();
+            }
             break None;
         }
         thread::sleep(Duration::from_millis(5));

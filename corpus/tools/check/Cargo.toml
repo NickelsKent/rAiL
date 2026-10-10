@@ -1,0 +1,18 @@
+[package]
+name = "corpus-check"
+version = "0.1.0"
+edition = "2024"
+license = "MIT OR Apache-2.0"
+publish = false
+description = "The benchmark corpus check (WF3): composition, layout, builds, sandboxed runs; std only."
+
+[lib]
+name = "corpus_check"
+path = "src/lib.rs"
+
+[[bin]]
+name = "corpus-check"
+path = "src/main.rs"
+
+[lints.rust]
+unsafe_code = "forbid"

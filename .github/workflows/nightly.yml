@@ -1,6 +1,10 @@
 # Nightly: the coverage-guided JSON parser fuzz target for 30 minutes on the
 # pinned nightly toolchain (NFR4.5). A crash, hang or round-trip mismatch
 # fails the run and the failing inputs are uploaded.
+#
+# Also the acceptance suites at nightly volume (FR57, NFR9.17): one job per
+# nightly group and platform, each within the group's 5-hour harness budget
+# (recorded in tests/acceptance/suites.toml), then a cross-platform compare.
 name: Nightly
 
 on:
@@ -38,3 +42,73 @@ jobs:
           name: fuzz-artifacts
           path: fuzz/artifacts/
           if-no-files-found: ignore
+
+  groups:
+    name: acceptance groups
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    outputs:
+      groups: ${{ steps.list.outputs.groups }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain (rust-toolchain.toml)
+        run: rustup toolchain install && rustc --version
+      - name: List the nightly groups from the settings file
+        id: list
+        run: echo "groups=$(cargo run --locked --quiet -p rail-testkit --bin rail-accept -- --list-groups)" >> "$GITHUB_OUTPUT"
+
+  acceptance:
+    name: acceptance ${{ matrix.group }} (${{ matrix.platform.name }})
+    needs: groups
+    strategy:
+      fail-fast: false
+      matrix:
+        group: ${{ fromJSON(needs.groups.outputs.groups) }}
+        platform:
+          - name: macos
+            os: macos-latest
+          - name: linux
+            os: ubuntu-latest
+    runs-on: ${{ matrix.platform.os }}
+    # Above the 5-hour group budget plus builds, below GitHub's 6-hour limit.
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain (rust-toolchain.toml)
+        run: rustup toolchain install && rustc --version
+      - name: Acceptance suites, nightly level
+        run: cargo run --locked --quiet -p rail-testkit --bin rail-accept -- --level nightly --group "${{ matrix.group }}"
+      - name: Keep the acceptance results (NFR10.4)
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: acceptance-nightly-${{ matrix.group }}-${{ matrix.platform.name }}
+          path: target/acceptance/
+          retention-days: 90
+          if-no-files-found: ignore
+
+  compare:
+    name: acceptance compare (macOS vs Linux)
+    needs: acceptance
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain (rust-toolchain.toml)
+        run: rustup toolchain install && rustc --version
+      - name: Download every group's results (this run's artifacts)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'acceptance-nightly-*' --dir acceptance
+      - name: Compare
+        run: cargo run --locked --quiet -p rail-testkit --bin rail-accept -- --compare acceptance/*/results-nightly-*.json

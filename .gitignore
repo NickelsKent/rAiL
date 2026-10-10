@@ -88,3 +88,4 @@ aidlc/diagnostics/
 # Rust build output and rAiL build directories
 /target/
 .rail/
+/corpus/**/target/

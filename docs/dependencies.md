@@ -12,6 +12,8 @@ enforces the list: any crate not allowed there fails CI.
 | `cranelift-frontend` | =0.136.1 | `rail-codegen` | Builds Cranelift functions from the skeleton's SSA IR. | Pre-approved (requirements Q5) |
 | `cranelift-module` | =0.136.1 | `rail-codegen` | Declares and links functions within one module. | Pre-approved (requirements Q5) |
 | `cranelift-object` | =0.136.1 | `rail-codegen` | Writes the object file that `cc` links. | Pre-approved (requirements Q5) |
+| `toml` | 1.1.7 (features `std`, `serde`, `parse`) | `rail-testkit` only | Read the reviewed suite settings file `tests/acceptance/suites.toml` (acceptance harness, U2). Test-only: `rail-testkit` is never shipped, and the crate never reaches the `rail` binary. | Approved (acceptance-harness Functional Design Q9) |
+| `serde` | 1.0.229 (feature `derive`) | `rail-testkit` only | Map the TOML settings onto typed Rust structs with unknown keys rejected (BR1.1). Test-only, as above. | Approved with `toml` (acceptance-harness Functional Design Q9) |
 | `libfuzzer-sys` | =0.4.13 | `fuzz/` only | Coverage-guided fuzzing of the in-house JSON parser at the protocol boundary. `fuzz/` is not a workspace member, and CI checks that it never reaches the `rail` dependency tree (NFR7.5). | Approved (NFR requirements Q7) |
 
 The four Cranelift crates share one exact version. They are enough to target
@@ -23,7 +25,9 @@ object files identical across machines of one platform (NFR3.2).
 The runtime (`crates/rail-runtime`) has no dependencies. It is a `no_std`
 static library that declares the C library's `write` and `exit` itself (no
 `libc` crate). The workspace uses no JSON crate (`rail-json` is in-house) and
-no test crate (`rail-testkit` is in-house).
+no test crate (`rail-testkit` is in-house). `toml` and `serde` are dependencies
+of `rail-testkit` only; `cargo tree -p rail -e normal --target all -i toml`
+prints nothing.
 
 ## Transitive crates
 
@@ -39,10 +43,30 @@ brings a new transitive crate needs its own entry and approval.
 0.17), `heck`, `indexmap`, `libm`, `log`, `memchr`, `object`, `regalloc2`,
 `rustc-hash`, `smallvec`, `target-lexicon`, `wasmtime-internal-core`.
 
-`Cargo.lock` also lists `serde`, `serde_core` and `stable_deref_trait`. They are
-optional dependencies of Cranelift crates, and the lockfile records every
-optional dependency. None of them is compiled into `rail` (check with
-`cargo tree -p rail --target all -i serde`).
+`toml` and `serde` (with `derive`) pull in the crates below in the test-only
+`rail-testkit`. Each was approved by the owner on 2026-10-08 with the reason:
+test-only, pulled in by the approved `toml`/`serde` (derive) used by
+`rail-testkit` to read `tests/acceptance/suites.toml`; never reaches the `rail`
+binary.
+
+| Crate | Version | Licence | Pulled in by |
+|---|---|---|---|
+| `serde_core` | 1.0.229 | MIT OR Apache-2.0 | `serde`, `toml` |
+| `serde_derive` | 1.0.229 | MIT OR Apache-2.0 | `serde` (`derive`) |
+| `proc-macro2` | 1.0.107 | MIT OR Apache-2.0 | `serde_derive` |
+| `quote` | 1.0.47 | MIT OR Apache-2.0 | `serde_derive` |
+| `syn` | 3.0.6 | MIT OR Apache-2.0 | `serde_derive` |
+| `unicode-ident` | 1.0.26 | (MIT OR Apache-2.0) AND Unicode-3.0 | `proc-macro2`, `syn` |
+| `serde_spanned` | 1.1.2 | MIT OR Apache-2.0 | `toml` |
+| `toml_datetime` | 1.1.2+spec-1.1.0 | MIT OR Apache-2.0 | `toml` |
+| `toml_parser` | 1.1.4+spec-1.1.0 | MIT OR Apache-2.0 | `toml` |
+| `winnow` | 1.0.4 | MIT | `toml_parser` |
+
+`Cargo.lock` also lists `stable_deref_trait` (an optional dependency of a
+Cranelift crate) and `toml_writer` (an optional dependency of `toml`, behind its
+`display` feature, which is not enabled). The lockfile records every optional
+dependency; neither is compiled. No crate in this section is compiled into
+`rail` (check with `cargo tree -p rail -e normal --target all -i serde`).
 
 ## Licences
 
@@ -56,6 +80,7 @@ MIT OR Apache-2.0 licence:
 | MIT | `libm` |
 | Unlicense OR MIT | `memchr` (used under MIT) |
 | Zlib | `foldhash` |
+| (MIT OR Apache-2.0) AND Unicode-3.0 | `unicode-ident` (Unicode-3.0 covers its Unicode data tables; build-time only, through `serde_derive` in `rail-testkit`; approved 2026-10-08) |
 | (MIT OR Apache-2.0) AND NCSA | `libfuzzer-sys` (NCSA covers the bundled libFuzzer sources; fuzz crate only) |
 
 The JSONTestSuite files in `tests/data/JSONTestSuite/` are test data under the

@@ -1,0 +1,285 @@
+# Fixture: a valid settings file with all 15 suites (S0 implemented).
+# Harness tests derive invalid variants from it by small text edits.
+
+schema_version = 1
+reference_machines = []
+
+[budgets]
+pr_minutes = 10
+nightly_group_minutes = 300
+
+[[suites]]
+id = "S0"
+title = "Walking-skeleton smoke"
+owning_unit = "U1"
+status = "implemented"
+drivers = ["cli", "rap"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+nightly_group = "smoke"
+pass_criterion_ref = "FR27: the seven walking-skeleton steps (not in spec §12)"
+inputs = [
+  { kind = "fixed", path = "fixtures" },
+  { kind = "fixed", path = "crates/rail/tests/golden" },
+]
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "skeleton checks (the seven steps)"
+pr = [{ kind = "count", count = 1 }]
+nightly = [{ kind = "count", count = 1 }]
+full = [{ kind = "count", count = 1 }]
+
+[[suites]]
+id = "T1"
+title = "Deterministic parsing"
+owning_unit = "U3"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = true
+pass_criterion_ref = "spec §12 T1"
+inputs = []
+seed_policy = { uses_seed = true, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "generated modules"
+full = [{ kind = "count", count = 1000000 }]
+
+[[suites]]
+id = "T2"
+title = "Unique spelling"
+owning_unit = "U3"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T2"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "rule variants"
+full = [{ kind = "exhaustive", over = "every §2.7 rule (variants per rule set by U3)" }]
+
+[[suites]]
+id = "T3"
+title = "Deterministic builds"
+owning_unit = "U10"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "release"
+process_deadline_seconds = 60
+cross_platform = true
+pass_criterion_ref = "spec §12 T3"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "corpus programs"
+full = [{ kind = "exhaustive", over = "the corpus, built twice per platform" }]
+
+[[suites]]
+id = "T4"
+title = "Lossless round trips"
+owning_unit = "U3"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T4"
+inputs = []
+seed_policy = { uses_seed = true, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "modules"
+full = [{ kind = "exhaustive", over = "the corpus and the std library" }, { kind = "count", count = 100000 }]
+
+[[suites]]
+id = "T5"
+title = "Stable source maps"
+owning_unit = "U5"
+status = "pending"
+drivers = ["rap"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T5"
+inputs = []
+seed_policy = { uses_seed = true, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "single-definition patches"
+full = [{ kind = "count", count = 10000 }]
+
+[[suites]]
+id = "T6"
+title = "Localized agent edits"
+owning_unit = "U5"
+status = "pending"
+drivers = ["rap"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T6"
+inputs = []
+seed_policy = { uses_seed = true, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "scripted edit tasks"
+full = [{ kind = "count", count = 500 }]
+
+[[suites]]
+id = "T7"
+title = "Cross-platform consistency"
+owning_unit = "U8"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = true
+pass_criterion_ref = "spec §12 T7"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "corpus programs"
+full = [{ kind = "exhaustive", over = "the corpus with fixed inputs, seeds and replay logs" }]
+
+[[suites]]
+id = "T8"
+title = "Unsafe and inefficient code detection"
+owning_unit = "U13"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T8"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "programs (300 seeded defects, 300 clean controls)"
+full = [{ kind = "count", count = 600 }]
+
+[[suites]]
+id = "T9"
+title = "Functional correctness"
+owning_unit = "U7"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T9"
+inputs = []
+seed_policy = { uses_seed = true, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "generated inputs per corpus program"
+full = [{ kind = "exhaustive", over = "the std and corpus tests" }, { kind = "count", count = 10000 }]
+
+[[suites]]
+id = "T10"
+title = "Memory safety"
+owning_unit = "U7"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "sanitizer"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T10"
+inputs = []
+seed_policy = { uses_seed = true, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "CPU-hours"
+full = [{ kind = "exhaustive", over = "the corpus under sanitizers" }, { kind = "count", count = 24 }]
+
+[[suites]]
+id = "T11"
+title = "Bounded resource use"
+owning_unit = "U15"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T11"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "adversarial programs"
+full = [{ kind = "count", count = 100 }]
+
+[[suites]]
+id = "T12"
+title = "Capability enforcement"
+owning_unit = "U7"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "debug"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T12"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "operations"
+full = [{ kind = "exhaustive", over = "every std.fs/net/proc/env operation outside its grant" }]
+
+[[suites]]
+id = "T13"
+title = "Performance targets"
+owning_unit = "U17"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "release"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T13"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "targets"
+full = [{ kind = "exhaustive", over = "the §11.2 targets, on the reference machines only" }]
+
+[[suites]]
+id = "T14"
+title = "Minimal dependency operation"
+owning_unit = "U10"
+status = "pending"
+drivers = ["cli"]
+platforms = ["macos", "linux"]
+build = "release"
+process_deadline_seconds = 60
+cross_platform = false
+pass_criterion_ref = "spec §12 T14"
+inputs = []
+seed_policy = { uses_seed = false, nightly_seed = "fresh", release_seed = "fresh" }
+
+[suites.volumes]
+unit_of_measure = "programs"
+full = [{ kind = "exhaustive", over = "hello-world and the full corpus, offline" }]

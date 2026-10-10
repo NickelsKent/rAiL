@@ -70,9 +70,70 @@ jobs:
       - name: Walking-skeleton verification (WF6)
         timeout-minutes: 10
         run: scripts/verify-skeleton.sh
+      - name: Acceptance suites, pull-request level (FR57)
+        # The harness enforces its own 10-minute budget (NFR9.16); the step
+        # timeout only guards against a hung harness.
+        timeout-minutes: 20
+        run: cargo run --locked --quiet -p rail-testkit --bin rail-accept -- --level pr
+      - name: Keep the acceptance results (NFR10.4)
+        if: always()
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: acceptance-pr-${{ matrix.name }}
+          path: target/acceptance/
+          retention-days: 90
+          if-no-files-found: ignore
       - name: Coverage (at least 80% of lines, measured on Linux)
         if: matrix.name == 'linux'
         run: cargo llvm-cov nextest --locked $UNIT_PACKAGES --fail-under-lines 80
+
+  compare:
+    name: acceptance compare (macOS vs Linux)
+    # BR7.7: cross-platform suites must observe the same on both platforms.
+    needs: test
+    if: ${{ !cancelled() }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Install the pinned Rust toolchain (rust-toolchain.toml)
+        run: rustup toolchain install && rustc --version
+      - name: Download both platforms' results (this run's artifacts)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh run download "$GITHUB_RUN_ID" --repo "$GITHUB_REPOSITORY" --pattern 'acceptance-pr-*' --dir acceptance
+      - name: Compare
+        run: cargo run --locked --quiet -p rail-testkit --bin rail-accept -- --compare acceptance/*/results-pr.json
+
+  ratchet:
+    name: acceptance ratchet (settings vs main)
+    # NFR9.15: the ratchet that judges a pull request is the one built from
+    # main, so a pull request cannot weaken the check that judges it.
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          ref: ${{ github.base_ref }}
+          path: base
+          persist-credentials: false
+      - name: Check the ratchet with main's harness
+        run: |
+          if [ ! -f base/tests/acceptance/suites.toml ] || [ ! -f base/crates/rail-testkit/src/bin/rail-accept.rs ]; then
+            echo "notice: no base harness; the ratchet starts after this merge"
+            exit 0
+          fi
+          (cd base && rustup toolchain install && cargo build --locked --quiet -p rail-testkit --bin rail-accept)
+          base/target/debug/rail-accept --check-ratchet base/tests/acceptance/suites.toml --against tests/acceptance/suites.toml
 
   supply-chain:
     name: supply chain (cargo-deny)

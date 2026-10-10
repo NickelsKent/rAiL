@@ -264,15 +264,22 @@ note: "until U9 lands, U3 needs BLAKE3 for defhash: U3 may use an approved crate
 contract: C9-suite-registration
 provider: u2-acceptance-harness
 kind: rust-interface + recorded config file
-version: 0.1
+version: 0.2
 suite_config_file:
-  path: "tests/acceptance/suites.toml or canonical text equivalent (chosen in U2 design)"
-  fields: [suite_id (T1..T14), ci_volume, full_volume, seed_policy, platforms, inputs]
-  rule: "lowering ci_volume is lowering a pass criterion (firm rule A)"
+  path: "tests/acceptance/suites.toml"
+  format: "TOML (schema_version 1), read with the approved test-only toml + serde crates; unknown keys are refused"
+  file_fields: [schema_version, reference_machines (id, platform, description), budgets (pr_minutes, nightly_group_minutes)]
+  suite_fields: [id (S0, T1..T14, each once, in order), title, owning_unit, status (pending | implemented), drivers (cli | rap), platforms (macos | linux), build (debug | release | sanitizer), process_deadline_seconds, cross_platform, nightly_group (required once implemented), sanitizer_rustflags (required once an implemented suite records build = sanitizer), pass_criterion_ref, inputs (generator | corpus | fixed), seed_policy (uses_seed, pr_seed, nightly_seed = fresh, release_seed = fresh), volumes]
+  volumes: "unit_of_measure plus volumes.pr, volumes.nightly and volumes.full, each a list of entries: count n, exhaustive over a named set, or not_run with a reason; a pending suite records only volumes.full"
+  rules:
+    - "lowering a recorded volume is lowering a pass criterion (firm rule A)"
+    - "the ratchet (BR2.1-BR2.5, rail-accept --check-ratchet, run in CI from main's build on every pull request) refuses lowered volumes, changed units of measure or exhaustive sets, removed entries, inputs, platforms or drivers, a changed build of an implemented suite, lowered deadlines, cross_platform true -> false, uses_seed true -> false, and suites that go back to pending or disappear; seed, budget and nightly-group changes and additions are notices"
+    - "cross-platform suites are judged by rail-accept --compare over each platform's normalized observation files (BR7.7); T13 needs a passing result from every recorded reference machine (BR3.5)"
 suite_interface:
-  generate_inputs: "seed -> input set (logged seed)"
-  run: "input -> observed outcome via CLI --json or RAP only (black box, ADR-006)"
-  judge: "outcomes -> pass/fail per the spec's pass criterion"
+  location: "crates/rail-testkit/src/suites/<id>.rs, registered in rail-testkit's static registry (Registry::production); a unit flips its suite to implemented, with pr and nightly volumes, pr_seed (if used), inputs and nightly_group, in the same change (BR6.4)"
+  generate_inputs: "(seed, level volume entries) -> ordered inputs; a pure function of its arguments (BR4.3); fresh seeds are printed before use"
+  run: "input -> observation via CLI --json or RAP only (black box, ADR-006), starting processes only through the harness's run context (scrubbed environment, per-run directory, process-group deadlines)"
+  judge: "observations -> pass/fail per input, per the spec's pass criterion"
 ```
 
 ### C10 — Benchmark corpus layout
@@ -426,7 +433,7 @@ values: "printed in human form"
 | Contract | Question | Blocks |
 |---|---|---|
 | C1 / C8 | Before U9 exists, does U3 use an approved BLAKE3 crate or a minimal in-house BLAKE3, to be replaced behind C8 later? | U3 (syntax) |
-| C9 | Is the suite config file TOML or canonical text? TOML needs an approved crate. | U2 (acceptance-harness) |
+| C9 | Closed by U2: the suite config file is TOML (`tests/acceptance/suites.toml`), read with the approved test-only `toml` + `serde` crates (acceptance-harness Functional Design Q9). | — |
 | E3 | Where does the format version of canonical text live, given that the grammar has no edition form in modules? | U3 (syntax) |
 | C6 | What exact register assignment carries the evidence parameters on x86-64 and AArch64? | U6 (execution-core) |
 | E1 | Does the `run.run` method stream program output as progress notifications, or only return it at the end? | U5 (agent-loop), U7 (system-and-stdlib) |

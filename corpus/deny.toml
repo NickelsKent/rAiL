@@ -1,0 +1,32 @@
+# cargo-deny policy for the corpus Rust packages (NFR7.8, BR5.5). Run with:
+#   cargo deny --manifest-path corpus/tools/check/Cargo.toml --config corpus/deny.toml check
+# (and likewise for every corpus Rust package). The corpus adds no crate
+# beyond the standard library until the owner approves `rayon` and its
+# resolved dependencies for the data-parallel class; they are added to the
+# allow list below in the same change as the vendored sources.
+
+[graph]
+targets = ["aarch64-apple-darwin", "x86_64-unknown-linux-gnu"]
+all-features = false
+
+[advisories]
+yanked = "deny"
+ignore = []
+
+[licenses]
+allow = ["MIT", "Apache-2.0", "Apache-2.0 WITH LLVM-exception", "Unicode-3.0"]
+confidence-threshold = 0.93
+
+[licenses.private]
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+allow-wildcard-paths = true
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]
+allow-git = []

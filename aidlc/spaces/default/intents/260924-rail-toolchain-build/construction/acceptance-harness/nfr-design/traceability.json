@@ -1,0 +1,19 @@
+{
+  "stage": "nfr-design",
+  "unit": "acceptance-harness",
+  "upstream_ids": ["NFR1.4", "NFR3.6", "NFR3.7", "NFR5.7", "NFR5.8", "NFR7.7", "NFR9.15", "NFR9.16", "NFR9.17", "NFR9.18", "NFR10.3", "NFR10.4"],
+  "coverage": [
+    { "id": "NFR1.4", "status": "OK", "target": "Reference-machine ids checked against settings before any suite runs; id written to results; --compare requires every id (security-design.md Boundary 4)" },
+    { "id": "NFR3.6", "status": "OK", "target": "Scheduler calls each suite once; no retry option; workflows call rail-accept once per level or group (security-design.md Boundary 4)" },
+    { "id": "NFR3.7", "status": "OK", "target": "Results built as ordered rail-json values with repository-relative paths; timings and run paths only on the terminal (security-design.md Boundary 4)" },
+    { "id": "NFR5.7", "status": "OK", "target": "env_clear then allow-list on every rail Command; literal-only suite additions; environment-printing helper test (security-design.md Boundary 1)" },
+    { "id": "NFR5.8", "status": "OK", "target": "Per-run TempDir with home, tmp and work; removed on pass, kept and printed on fail (security-design.md Boundary 2)" },
+    { "id": "NFR7.7", "status": "OK", "target": "toml and serde only in rail-testkit; cargo metadata walk over normal edges proves rail-testkit is not reachable from rail; cargo deny (security-design.md Dependency isolation)" },
+    { "id": "NFR9.15", "status": "OK", "target": "Ratchet built from main runs against the PR's settings file; bootstrap passes with a notice (security-design.md Boundary 3)" },
+    { "id": "NFR9.16", "status": "OK", "target": "pr_minutes = 10 in the settings file with watchdog enforcement and process-group kills (security-design.md Time budgets)" },
+    { "id": "NFR9.17", "status": "OK", "target": "Budgets and nightly_group recorded in the settings file; rail-accept --list-groups feeds the nightly matrix; every implemented suite names exactly one group (security-design.md Time budgets)" },
+    { "id": "NFR9.18", "status": "OK", "target": "Stop at budget: running suite error, remaining not_run, results written, exit 1; per-suite share in the summary (security-design.md Time budgets)" },
+    { "id": "NFR10.3", "status": "OK", "target": "No secrets in harness workflow steps; gitleaks and GitHub secret scanning; plain reference-machine ids (security-design.md Supply chain and secrets)" },
+    { "id": "NFR10.4", "status": "OK", "target": "upload-artifact with retention-days 90 and if: always(); release checklist attaches release results and --compare output (security-design.md Boundary 4)" }
+  ]
+}
