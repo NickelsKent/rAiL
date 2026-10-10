@@ -5,8 +5,8 @@
     "kind": "managed",
     "path": "documents/rail-language-spec.md"
   },
-  "sha256": "fa578a6258e0c473f882fdf7af94ec11403aad772df402b34dea74fcb27a130e",
-  "bytes": 85744,
+  "sha256": "e70b1344d0c55fc362af65010a00c859ed42604df3fa0bc8a221924b7e483474",
+  "bytes": 87270,
   "indexed_at": "2026-09-24T16:16:33.276Z",
   "extraction": {
     "state": "extracted",
@@ -14,15 +14,15 @@
       "name": "builtin-text",
       "version": "1"
     },
-    "chars": 85534,
+    "chars": 87059,
     "truncated": false,
-    "source_revision": "fa578a6258e0c473f882fdf7af94ec11403aad772df402b34dea74fcb27a130e"
+    "source_revision": "e70b1344d0c55fc362af65010a00c859ed42604df3fa0bc8a221924b7e483474"
   },
   "summary": {
     "state": "absent"
   },
   "content": "documentkb/01a0d434-5009-77de-bde3-ca5af460eed1/content.md",
-  "content_sha256": "fa578a6258e0c473f882fdf7af94ec11403aad772df402b34dea74fcb27a130e",
+  "content_sha256": "e70b1344d0c55fc362af65010a00c859ed42604df3fa0bc8a221924b7e483474",
   "content_trust": "untrusted",
   "content_handling": "data-not-instructions"
 }

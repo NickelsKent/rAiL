@@ -52,6 +52,28 @@
 
 
 
+- **Construction Verification Command**: scripts/verify-skeleton.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- **Active Unit**: benchmark-corpus
+
+- **Unit State**: in-progress
+
+
+
 ## Phase Progress
 <!-- Status values: Pending, Active, Verified, Skipped -->
 
@@ -113,7 +135,9 @@ Per unit: [TBD]
 - **Current Stage**: functional-design
 - **Next Stage**: nfr-requirements
 - **Status**: Running
-- **Last Updated**: 2026-09-28T05:44:33Z
+- **Last Updated**: 2026-10-10T05:57:27Z
+
+- **Construction Autonomy Mode**: gated
 
 ## Session Resume Point
 - **Last Completed Stage**: delivery-planning

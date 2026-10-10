@@ -1,0 +1,681 @@
+{
+  "stage": "functional-design",
+  "unit": "acceptance-harness",
+  "upstream_ids": [
+    "FR1",
+    "FR1.1",
+    "FR2",
+    "FR2.1",
+    "FR2.2",
+    "FR2.3",
+    "FR2.4",
+    "FR2.5",
+    "FR3",
+    "FR4",
+    "FR4.1",
+    "FR4.2",
+    "FR4.3",
+    "FR5",
+    "FR5.1",
+    "FR5.2",
+    "FR5.3",
+    "FR5.4",
+    "FR5.5",
+    "FR6",
+    "FR7",
+    "FR8",
+    "FR8.1",
+    "FR8.2",
+    "FR9",
+    "FR9.1",
+    "FR10",
+    "FR11",
+    "FR11.1",
+    "FR11.2",
+    "FR11.3",
+    "FR11.4",
+    "FR11.5",
+    "FR12",
+    "FR13",
+    "FR13.1",
+    "FR13.2",
+    "FR14",
+    "FR15",
+    "FR15.1",
+    "FR16",
+    "FR17",
+    "FR18",
+    "FR18.1",
+    "FR18.2",
+    "FR19",
+    "FR19.1",
+    "FR19.2",
+    "FR19.3",
+    "FR20",
+    "FR21",
+    "FR22",
+    "FR23",
+    "FR24",
+    "FR24.1",
+    "FR24.2",
+    "FR25",
+    "FR26",
+    "FR26.1",
+    "FR26.2",
+    "FR26.3",
+    "FR27",
+    "FR28",
+    "FR29",
+    "FR30",
+    "FR31",
+    "FR32",
+    "FR32.1",
+    "FR32.2",
+    "FR32.3",
+    "FR32.4",
+    "FR33",
+    "FR34",
+    "FR35",
+    "FR36",
+    "FR37",
+    "FR38",
+    "FR39",
+    "FR40",
+    "FR41",
+    "FR42",
+    "FR43",
+    "FR44",
+    "FR45",
+    "FR46",
+    "FR47",
+    "FR48",
+    "FR49",
+    "FR50",
+    "FR51",
+    "FR52",
+    "FR53",
+    "FR54",
+    "FR55",
+    "FR56",
+    "FR57",
+    "FR58",
+    "FR58.1",
+    "FR59",
+    "NFR3",
+    "NFR6",
+    "NFR7.2",
+    "NFR9",
+    "NFR2",
+    "NFR4",
+    "NFR5",
+    "NFR7",
+    "NFR7.1",
+    "NFR7.3",
+    "NFR8",
+    "NFR1",
+    "NFR10"
+  ],
+  "coverage": [
+    {
+      "id": "FR1",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR1.1",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR2",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR2.1",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR2.2",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR2.3",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR2.4",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR2.5",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR3",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR4",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR4.1",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR4.2",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR4.3",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR5",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR5.1",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR5.2",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR5.3",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR5.4",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR5.5",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR6",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR7",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR8",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR8.1",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR8.2",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR9",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR9.1",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR10",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR11",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR11.1",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR11.2",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR11.3",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR11.4",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR11.5",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR12",
+      "status": "N/A",
+      "target": "Implemented by U4 checker-and-lints, not by the acceptance harness"
+    },
+    {
+      "id": "FR13",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR13.1",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR13.2",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR14",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR15",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR15.1",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR16",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR17",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR18",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR18.1",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR18.2",
+      "status": "N/A",
+      "target": "Implemented by U3 syntax, not by the acceptance harness"
+    },
+    {
+      "id": "FR19",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR19.1",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR19.2",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR19.3",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR20",
+      "status": "N/A",
+      "target": "Implemented by U5 agent-loop, not by the acceptance harness"
+    },
+    {
+      "id": "FR21",
+      "status": "N/A",
+      "target": "Implemented by U6 execution-core, not by the acceptance harness"
+    },
+    {
+      "id": "FR22",
+      "status": "N/A",
+      "target": "Implemented by U6 execution-core, not by the acceptance harness"
+    },
+    {
+      "id": "FR23",
+      "status": "N/A",
+      "target": "Implemented by U6 execution-core, not by the acceptance harness"
+    },
+    {
+      "id": "FR24",
+      "status": "N/A",
+      "target": "Implemented by U6 execution-core, not by the acceptance harness"
+    },
+    {
+      "id": "FR24.1",
+      "status": "N/A",
+      "target": "Implemented by U6 execution-core, not by the acceptance harness"
+    },
+    {
+      "id": "FR24.2",
+      "status": "N/A",
+      "target": "Implemented by U6 execution-core, not by the acceptance harness"
+    },
+    {
+      "id": "FR25",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR26",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR26.1",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR26.2",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR26.3",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR27",
+      "status": "OK",
+      "target": "BR8.1, BR8.2"
+    },
+    {
+      "id": "FR28",
+      "status": "N/A",
+      "target": "Implemented by U8 concurrency-and-system-std, not by the acceptance harness"
+    },
+    {
+      "id": "FR29",
+      "status": "N/A",
+      "target": "Implemented by U8 concurrency-and-system-std, not by the acceptance harness"
+    },
+    {
+      "id": "FR30",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR31",
+      "status": "N/A",
+      "target": "Implemented by U8 concurrency-and-system-std, not by the acceptance harness"
+    },
+    {
+      "id": "FR32",
+      "status": "N/A",
+      "target": "Implemented by U9 crypto-and-net, not by the acceptance harness"
+    },
+    {
+      "id": "FR32.1",
+      "status": "N/A",
+      "target": "Implemented by U9 crypto-and-net, not by the acceptance harness"
+    },
+    {
+      "id": "FR32.2",
+      "status": "N/A",
+      "target": "Implemented by U9 crypto-and-net, not by the acceptance harness"
+    },
+    {
+      "id": "FR32.3",
+      "status": "N/A",
+      "target": "Implemented by U9 crypto-and-net, not by the acceptance harness"
+    },
+    {
+      "id": "FR32.4",
+      "status": "N/A",
+      "target": "Implemented by U9 crypto-and-net, not by the acceptance harness"
+    },
+    {
+      "id": "FR33",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR34",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR35",
+      "status": "N/A",
+      "target": "Implemented by U7 system-and-stdlib, not by the acceptance harness"
+    },
+    {
+      "id": "FR36",
+      "status": "N/A",
+      "target": "Implemented by U15 wasm-sandbox, not by the acceptance harness"
+    },
+    {
+      "id": "FR37",
+      "status": "N/A",
+      "target": "Implemented by U15 wasm-sandbox, not by the acceptance harness"
+    },
+    {
+      "id": "FR38",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR39",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR40",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR41",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR42",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR43",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR44",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR45",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR46",
+      "status": "N/A",
+      "target": "Implemented by U10 supply-chain, not by the acceptance harness"
+    },
+    {
+      "id": "FR47",
+      "status": "N/A",
+      "target": "Implemented by U11 first-party-packages, not by the acceptance harness"
+    },
+    {
+      "id": "FR48",
+      "status": "N/A",
+      "target": "Implemented by U12 release-backend, not by the acceptance harness"
+    },
+    {
+      "id": "FR49",
+      "status": "N/A",
+      "target": "Implemented by U12 release-backend, not by the acceptance harness"
+    },
+    {
+      "id": "FR50",
+      "status": "N/A",
+      "target": "Implemented by U13 deep-analysis, not by the acceptance harness"
+    },
+    {
+      "id": "FR51",
+      "status": "N/A",
+      "target": "Implemented by U13 deep-analysis, not by the acceptance harness"
+    },
+    {
+      "id": "FR52",
+      "status": "N/A",
+      "target": "Implemented by U13 deep-analysis, not by the acceptance harness"
+    },
+    {
+      "id": "FR53",
+      "status": "N/A",
+      "target": "Implemented by U14 debugger, not by the acceptance harness"
+    },
+    {
+      "id": "FR54",
+      "status": "N/A",
+      "target": "Implemented by U16 benchmark-corpus, not by the acceptance harness"
+    },
+    {
+      "id": "FR55",
+      "status": "N/A",
+      "target": "Implemented by U17 measurement-tools, not by the acceptance harness"
+    },
+    {
+      "id": "FR56",
+      "status": "N/A",
+      "target": "Implemented by U17 measurement-tools, not by the acceptance harness"
+    },
+    {
+      "id": "FR57",
+      "status": "OK",
+      "target": "BR1.1, BR1.2, BR1.3, BR1.4, BR1.5, BR1.6, BR1.7, BR2.1, BR2.2, BR2.3, BR2.4, BR2.5, BR3.1, BR3.2, BR3.3, BR3.4, BR3.5, BR3.6, BR4.1, BR4.2, BR4.3, BR5.1, BR5.2, BR5.3, BR6.1, BR6.2, BR6.3, BR6.4, BR7.1, BR7.2, BR7.3, BR7.4, BR7.5, BR7.6, BR7.7, BR9.1, BR9.2, BR8.1, BR8.2"
+    },
+    {
+      "id": "FR58",
+      "status": "OK",
+      "target": "BR9.1"
+    },
+    {
+      "id": "FR58.1",
+      "status": "OK",
+      "target": "BR9.1"
+    },
+    {
+      "id": "FR59",
+      "status": "Deferred",
+      "target": "Windows support is deferred beyond this work (Could); no unit"
+    },
+    {
+      "id": "NFR3",
+      "status": "OK",
+      "target": "BR4.3, BR7.2, BR7.7"
+    },
+    {
+      "id": "NFR6",
+      "status": "OK",
+      "target": "BR1.7, BR2.4, BR3.2, BR4.3, BR7.7"
+    },
+    {
+      "id": "NFR7.2",
+      "status": "N/A",
+      "target": "The toml and serde crates were approved as test-only dependencies of rail-testkit (Q9); cargo-deny checks them in CI; no harness rule"
+    },
+    {
+      "id": "NFR9",
+      "status": "N/A",
+      "target": "Test harnesses are excluded from the coverage floor; the harness is still written tests-first (functional-spec.md Testing implications)"
+    },
+    {
+      "id": "NFR1",
+      "status": "OK",
+      "target": "BR3.5, BR3.6"
+    },
+    {
+      "id": "NFR10",
+      "status": "OK",
+      "target": "BR3.6, BR5.3"
+    },
+    {
+      "id": "NFR2",
+      "status": "N/A",
+      "target": "Agent reliability is measured by U17 measurement-tools, not by the acceptance harness"
+    },
+    {
+      "id": "NFR4",
+      "status": "N/A",
+      "target": "Memory safety is delivered by U6 and U7 and checked by suite T10, whose content U7 owns"
+    },
+    {
+      "id": "NFR5",
+      "status": "N/A",
+      "target": "Capability safety is delivered by U7 and checked by suite T12, whose content U7 owns"
+    },
+    {
+      "id": "NFR7",
+      "status": "N/A",
+      "target": "Dependencies: see NFR7.1-NFR7.3"
+    },
+    {
+      "id": "NFR7.1",
+      "status": "N/A",
+      "target": "Runtime dependencies belong to U6; the harness is never linked into programs"
+    },
+    {
+      "id": "NFR7.3",
+      "status": "N/A",
+      "target": "Checked by suite T14, whose content U10 owns"
+    },
+    {
+      "id": "NFR8",
+      "status": "N/A",
+      "target": "TLS assurance belongs to U9"
+    }
+  ],
+  "reverse": []
+}

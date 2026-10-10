@@ -1,0 +1,20 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "acceptance-harness",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR7.1", "NFR7.2", "NFR7.3", "NFR8", "NFR9", "NFR10"],
+  "coverage": [
+    { "id": "NFR1", "status": "OK", "target": "NFR1.4" },
+    { "id": "NFR2", "status": "N/A", "target": "Agent reliability is measured by U17 measurement-tools; the harness makes no agent-reliability claim" },
+    { "id": "NFR3", "status": "OK", "target": "NFR3.6, NFR3.7" },
+    { "id": "NFR4", "status": "N/A", "target": "Memory safety is delivered by U6 and U7 and checked by suite T10, whose content U7 owns; the harness is safe Rust with forbid(unsafe_code)" },
+    { "id": "NFR5", "status": "OK", "target": "NFR5.7, NFR5.8" },
+    { "id": "NFR6", "status": "N/A", "target": "Portability of the harness is covered by Functional Design rules BR1.7, BR3.2, BR4.3 and BR7.7; no additional NFR requirement for this Unit" },
+    { "id": "NFR7", "status": "OK", "target": "NFR7.7" },
+    { "id": "NFR7.1", "status": "N/A", "target": "Runtime dependencies belong to U6; the harness is never linked into programs" },
+    { "id": "NFR7.2", "status": "OK", "target": "NFR7.7" },
+    { "id": "NFR7.3", "status": "N/A", "target": "Checked by suite T14, whose content U10 owns" },
+    { "id": "NFR8", "status": "N/A", "target": "TLS assurance belongs to U9" },
+    { "id": "NFR9", "status": "OK", "target": "NFR9.15, NFR9.16, NFR9.17, NFR9.18" },
+    { "id": "NFR10", "status": "OK", "target": "NFR10.3, NFR10.4" }
+  ]
+}

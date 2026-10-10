@@ -1001,7 +1001,19 @@ Rust remains faster at the ceiling because ownership avoids RC entirely; rAiL tr
 
 ## 12. Acceptance Tests
 
-The prototype is accepted when all 14 suites pass in CI on Linux, macOS and Windows; each has an objective, automated pass criterion.
+The prototype is accepted when all 14 suites pass on macOS and Linux, the two required platforms; each has an objective, automated pass criterion. Windows joins the required platforms in a later release; until then, references to "every OS" or "all three OSes" below mean macOS and Linux.
+
+Every suite is automated in the acceptance harness and recorded, with its settings, in `tests/acceptance/suites.toml`. Each suite records three volumes:
+
+- **Pull request:** a scaled-down volume, run on every pull request on macOS and Linux, with a recorded seed.
+- **Nightly:** a larger volume, run every night on both platforms, with a fresh seed that is printed before the suite starts.
+- **Full:** the volume in the table below, run as the release check on the owner's machines, with a fresh printed seed. A release requires every suite to pass at its full volume.
+
+Lowering a recorded volume lowers a pass criterion and is refused: a ratchet check on every pull request rejects lowered or narrowed volumes, units of measure, sets, inputs, platforms and builds. Cross-platform criteria (T1, T3, T7) are judged by comparing the platforms' recorded observations byte for byte.
+
+T13 counts only on the declared reference machines (§11.1) recorded in the harness settings; results from hosted CI runners are never T13 evidence, and a release requires a passing T13 result from every recorded reference machine.
+
+The harness also runs **S0**, a walking-skeleton smoke suite that is not one of the 14 acceptance suites: at every level and on both platforms it checks, parses, serves over RAP, builds and runs the one-function skeleton module against shared golden files.
 
 | ID | Property | Procedure | Pass criterion |
 | --- | --- | --- | --- |
