@@ -1,0 +1,61 @@
+;; The macOS sandbox profile for corpus programs (NFR5.9), used with
+;;   sandbox-exec -f macos.sb -D RUN=<dir> -D BUILD=<dir> -D READ1=<dir> -D READ2=<dir> <program> <args>
+;;
+;; Everything is denied by default. A program may read the system libraries,
+;; its own build directory and its run directory, and write only inside its
+;; run directory. All network access is denied. Thread creation is allowed.
+;; (Apple has deprecated sandbox-exec; the checker refuses to run if its
+;; self-test fails.)
+(version 1)
+(deny default)
+
+;; Apple's baseline for a deny-default process: the dyld shared cache, the
+;; system libraries, basic sysctls and the like. It grants nothing in users'
+;; home directories and no network.
+(import "system.sb")
+
+;; Processes and threads.
+(allow process-exec
+  (subpath (param "BUILD"))
+  (subpath (param "READ1"))
+  (subpath (param "READ2"))
+  (subpath "/bin")
+  (subpath "/usr/bin"))
+(allow process-fork)
+(allow signal (target self))
+(allow sysctl-read)
+(allow mach-lookup
+  (global-name "com.apple.system.logger")
+  (global-name "com.apple.system.notification_center"))
+
+;; System libraries and the loader.
+(allow file-read*
+  (subpath "/usr/lib")
+  (subpath "/usr/share")
+  (subpath "/System/Library")
+  (subpath "/System/Volumes/Preboot/Cryptexes")
+  (subpath "/Library/Apple")
+  (subpath "/private/etc/ssl")
+  (literal "/private/etc/localtime")
+  (subpath "/private/var/db/timezone")
+  (subpath "/usr/share/zoneinfo"))
+(allow file-read-metadata)
+(allow file-read* file-write*
+  (literal "/dev/null")
+  (literal "/dev/zero")
+  (literal "/dev/dtracehelper")
+  (literal "/dev/tty"))
+(allow file-read*
+  (literal "/dev/random")
+  (literal "/dev/urandom"))
+
+;; The program's own files (read-only) and its run directory (read-write).
+(allow file-read*
+  (subpath (param "BUILD"))
+  (subpath (param "READ1"))
+  (subpath (param "READ2")))
+(allow file-read* file-write*
+  (subpath (param "RUN")))
+
+;; No network of any kind.
+(deny network*)

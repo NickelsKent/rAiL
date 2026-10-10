@@ -1,0 +1,16 @@
+{
+  "stage": "nfr-design",
+  "unit": "benchmark-corpus",
+  "upstream_ids": ["NFR3.8", "NFR3.9", "NFR5.9", "NFR6.3", "NFR7.8", "NFR9.19", "NFR9.20", "NFR10.5", "NFR10.6"],
+  "coverage": [
+    { "id": "NFR3.8", "status": "OK", "target": "Byte-exact comparison with no tolerance; prompt-defined operation order, Go float64() conversions, OCaml let-bound products (security-design.md Boundary 3)" },
+    { "id": "NFR3.9", "status": "OK", "target": "Generators run twice per check; data-parallel programs at 1 thread and at the core count (security-design.md Boundary 3)" },
+    { "id": "NFR5.9", "status": "OK", "target": "sandbox-exec profile on macOS and bwrap on Linux, writes only in the run directory, no network, refusal when missing, canary and tree check as a second line (security-design.md Boundary 1)" },
+    { "id": "NFR6.3", "status": "OK", "target": "Corpus job on every pull request on macOS and Linux with an early pass when nothing relevant changed, and nightly (security-design.md Required check)" },
+    { "id": "NFR7.8", "status": "OK", "target": "Vendored rayon with per-crate owner approval and corpus/deny.toml; vendored domainslib with checksums and licence record (security-design.md Boundary 2)" },
+    { "id": "NFR9.19", "status": "OK", "target": "20-minute checker budget after install and cache restore; hard job timeouts 45 and 120 minutes; caching keyed on pins and lockfiles (security-design.md Time limits)" },
+    { "id": "NFR9.20", "status": "OK", "target": "Checker tests written first on synthetic corpora, including sandbox escape attempts (security-design.md Tests first)" },
+    { "id": "NFR10.5", "status": "OK", "target": "setup-go and setup-ocaml pinned to commit SHAs with read-only permissions; installed versions checked against pins (security-design.md Boundary 2)" },
+    { "id": "NFR10.6", "status": "OK", "target": "Offline cargo and dune builds from vendored sources; network denied by the sandbox (security-design.md Boundary 2, Boundary 1)" }
+  ]
+}

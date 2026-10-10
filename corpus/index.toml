@@ -1,0 +1,24 @@
+# The corpus index (BR1.4, entities.md IndexEntry). Read by the corpus check
+# and, later, by the harness suites and the measurement tools.
+#
+# Entries are added one program at a time as each class is delivered (BR9.1).
+# Each program is one [[entries]] table with exactly these fields:
+#
+#   program_id        one of the 40 approved names
+#   class             pure-transform | parsing-text | io-services | data-parallel
+#   task              the one-line task statement
+#   path              corpus/<class>/<program_id>/
+#   args              argument template; {input:<name>} names a file the
+#                     generator writes (a fixed input holds the same names),
+#                     {threads} and {helper} are the other placeholders
+#   input_mode        stdin | files | fixture-dir
+#   stdin_from        the generator output fed to stdin (when input_mode = stdin)
+#   threads_flag      true exactly for data-parallel programs
+#   generator_outputs file or directory names the generator writes under --out
+#   size_range        "<smallest> <largest>" meaningful --size
+#   reference_size    the size the performance comparison uses by default
+#   fixed_inputs      names of the directories under inputs/fixed/ (1 to 8)
+#   comparison        stdout-exact | stdout-and-tree (io-services)
+#   floating_point    true for n-body, spectral-norm, parallel-mandelbrot,
+#                     parallel-monte-carlo-pi
+schema_version = 1

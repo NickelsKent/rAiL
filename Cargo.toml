@@ -14,8 +14,10 @@ members = [
     "crates/rail-testkit",
 ]
 # rail-runtime is compiled by rail-build's build script (a no_std static
-# library with panic = "abort"); fuzz/ is a separate nightly-only crate.
-exclude = ["crates/rail-runtime", "fuzz"]
+# library with panic = "abort"); fuzz/ is a separate nightly-only crate;
+# corpus/ holds the benchmark corpus, whose Rust packages are built by the
+# corpus check, never by this workspace (BR5.4).
+exclude = ["crates/rail-runtime", "fuzz", "corpus"]
 
 [workspace.package]
 version = "0.1.0"

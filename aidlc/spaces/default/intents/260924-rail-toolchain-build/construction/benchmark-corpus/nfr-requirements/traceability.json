@@ -1,0 +1,20 @@
+{
+  "stage": "nfr-requirements",
+  "unit": "benchmark-corpus",
+  "upstream_ids": ["NFR1", "NFR2", "NFR3", "NFR4", "NFR5", "NFR6", "NFR7", "NFR7.1", "NFR7.2", "NFR7.3", "NFR8", "NFR9", "NFR10"],
+  "coverage": [
+    { "id": "NFR1", "status": "N/A", "target": "Performance targets are measured by U17 (T13) using this corpus; the corpus itself sets no performance target" },
+    { "id": "NFR2", "status": "N/A", "target": "Agent reliability is measured by U17; the corpus records the prompt and model per program but makes no reliability claim" },
+    { "id": "NFR3", "status": "OK", "target": "NFR3.8, NFR3.9" },
+    { "id": "NFR4", "status": "N/A", "target": "Memory safety is checked by T10, owned by U7, using this corpus" },
+    { "id": "NFR5", "status": "OK", "target": "NFR5.9" },
+    { "id": "NFR6", "status": "OK", "target": "NFR6.3" },
+    { "id": "NFR7", "status": "OK", "target": "NFR7.8" },
+    { "id": "NFR7.1", "status": "N/A", "target": "Runtime dependencies belong to U6; the corpus is never linked into rail" },
+    { "id": "NFR7.2", "status": "OK", "target": "NFR7.8" },
+    { "id": "NFR7.3", "status": "N/A", "target": "Checked by T14, owned by U10" },
+    { "id": "NFR8", "status": "N/A", "target": "TLS assurance belongs to U9; the corpus has no networking" },
+    { "id": "NFR9", "status": "OK", "target": "NFR9.19, NFR9.20" },
+    { "id": "NFR10", "status": "OK", "target": "NFR10.5, NFR10.6" }
+  ]
+}

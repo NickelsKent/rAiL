@@ -1,0 +1,34 @@
+# Pinned toolchains and approved libraries (BR5.3, BR5.5, NFR7.8).
+# Changed only by a reviewed change. The corpus check refuses to run when an
+# installed toolchain differs from its pin.
+schema_version = 1
+
+[toolchains]
+# Equals the workspace's rust-toolchain.toml channel.
+rust = "1.98.1"
+go = "1.27.2"
+ocaml = "5.5.1"
+dune = "3.24.2"
+opam = "2.6.1"
+
+[sandbox]
+# Linux only: the oldest bubblewrap the sandbox wrapper supports. The wrapper
+# needs --unshare-net, --die-with-parent, --ro-bind, --chdir and --clearenv.
+bubblewrap_min = "0.6.0"
+
+# Approved third-party libraries (data-parallel class only, vendored under
+# corpus/vendor/). None yet: rayon and domainslib are resolved, vendored and
+# shown to the owner for approval before the data-parallel class starts.
+#
+# [[libraries]]
+# language = "rust"            # rust | ocaml
+# name = "rayon"               # rayon | domainslib
+# version = "x.y.z"
+# checksum = "sha256:..."
+# vendored_path = "corpus/vendor/rust"
+# reason = "approved by the owner 2026-10-09 for the data-parallel class only"
+# allowed_class = "data-parallel"
+#
+# Known gap: opam has no advisory database, so vendored OCaml packages are
+# pinned by checksum and their licences are recorded here, but not scanned
+# for advisories.
